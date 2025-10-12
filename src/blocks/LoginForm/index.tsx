@@ -26,8 +26,8 @@ export const LoginForm = () => {
   const onSubmit = async () => {
     const url = `/user/login`;
     try {
-      const res = await axios.post(apiUrlBuilder(url), { phone });
-      if (res.status === 200 && res.data === phone) {
+      const res = await axios.post(apiUrlBuilder(url), { email });
+      if (res.status === 200 && res.data === email) {
         setCodeHasGenerated(true);
       }
     } catch (error) {
