@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@studio-freight/react-lenis": "^0.0.47",
     "axios": "^1.8.4",
     "framer-motion": "^12.23.22",
     "fuse.js": "^7.1.0",
@@ -37,11 +36,5 @@
     "figma-developer-mcp": "^0.5.2",
     "sharp": "^0.34.3",
     "typescript": "^5"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "^19",
-      "@types/react-dom": "^19"
-    }
   }
 }
