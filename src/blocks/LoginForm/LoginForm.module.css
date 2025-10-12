@@ -1,19 +1,34 @@
 .form_wrapper {
   width: 100%;
   display: flex;
+  align-items: center;
   flex-direction: column;
   gap: 2.2rem;
   padding: 2.0rem;
   max-width: 42.0rem;
 }
 
+.email_input {
+  font-size: 1.6rem;
+  width: 100%;
+  padding: 2.0rem 2.2rem;
+  border: 1px solid #000000;
+  color: #000000;
+  background: transparent;
+}
+
 .submit_button {
   font-size: 1.6rem;
-  background: #3C5F3B;
+  width: 100%;
+  background: #000000;
   padding: 2.0rem 2.2rem;
   border: none;
   color: #FFFFFF;
   cursor: pointer;
+}
+
+.logo_wrapper svg {
+  height: 8rem;
 }
 
 .info_wrapper {

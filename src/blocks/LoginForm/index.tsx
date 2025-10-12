@@ -1,20 +1,19 @@
 'use client';
 
 import s from './LoginForm.module.css';
-import { FaunoHeaderLogo } from '@/shared/assets/FaunoHeaderLogo';
 import { OutlinedInput } from '@/shared/ui';
-import { ChangeEvent, CSSProperties, useEffect, useRef, useState } from 'react';
+import { CSSProperties, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { apiUrlBuilder } from '@/shared/utils/urlBuilder';
 import { useUserStore } from '@/shared/stores/UserStore/UserStoreProvider';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { PhoneInput } from '@/shared/ui/PhoneInput';
+import { CarismaLogo } from '@/shared/assets/CarismaLogo';
 
 export const LoginForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [smsCode, setSmsCode] = useState(['', '', '', '']);
 
   const refInputCode = useRef<Array<HTMLInputElement>>([]);
@@ -39,7 +38,7 @@ export const LoginForm = () => {
   const onCheckCode = async (code: number) => {
     const url = `/user/login/sms`;
     try {
-      const res = await axios.post(apiUrlBuilder(url), { phone, smsCode: code });
+      const res = await axios.post(apiUrlBuilder(url), { email, smsCode: code });
       if (res.status === 200 && !!res.data?.token) {
         localStorage.setItem('token', res.data.token);
         setUser(res.data.token, res.data.user);
@@ -58,7 +57,7 @@ export const LoginForm = () => {
 
       if (positionsToFill > 6) positionsToFill = 6;
 
-      let newCode = structuredClone(smsCode);
+      const newCode = structuredClone(smsCode);
       for (
         let i = startInputNumber, pastedValueIterator = 0;
         i < positionsToFill;
@@ -69,7 +68,7 @@ export const LoginForm = () => {
       setSmsCode(newCode);
     } else {
       const currentInputNumber = parseInt(e.target.name[e.target.name.length - 1]) - 1;
-      let newCode = structuredClone(smsCode);
+      const newCode = structuredClone(smsCode);
       newCode[currentInputNumber] = e.target.value;
       setSmsCode(newCode);
       if (e.target.value !== '' && currentInputNumber !== 3) {
@@ -87,20 +86,23 @@ export const LoginForm = () => {
 
   return (
     <div className={s.form_wrapper}>
-      <FaunoHeaderLogo fill='black' />
+      {/* <FaunoHeaderLogo fill='black' /> */}
+      <div className={s.logo_wrapper}>
+        <CarismaLogo color='#000000' />
+      </div>
       {!codeHasGenerated ? (
         <>
-          <PhoneInput value={phone} onChange={setPhone} />
+          <input className={s.email_input} type='text' placeholder='Your email' value={email} onChange={(e) => setEmail(e.target.value)} />
           <button className={s.submit_button} onClick={onSubmit} disabled={isLoading}>
-            Отправить код
+            Send Code
           </button>
         </>
       ) : (
         <>
           <div className={s.info_wrapper}>
-            <span className={s.title}>Введите код из SMS</span>
-            <span className={s.subTitle}>Мы отправили SMS с кодом на телефон</span>
-            <span className={s.phone}>{phone}</span>
+            <span className={s.title}>Enter code from email</span>
+            {/* <span className={s.subTitle}>Мы отправили SMS с кодом на телефон</span> */}
+            <span className={s.phone}>{email}</span>
             <span className={s.ya_napisal_ne_tot_nomer} onClick={() => setCodeHasGenerated(false)}>
               Изменить номер
             </span>

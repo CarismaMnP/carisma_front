@@ -36,10 +36,10 @@ export const BurgerNavbar = () => {
         </Link>
         <div className={s.wrapper}>
           <Link href={token ? '/profile' : '/login'} className={s.link_button}>
-            <PersonIcon color={"#3C5F3B"} />
+            <PersonIcon color={"#000000"} />
           </Link>
           <button className={s.link_button} onClick={() => switchCart()}>
-            <CartIcon color={"#3C5F3B"} />
+            <CartIcon color={"#000000"} />
           </button>
         </div>
       </div>

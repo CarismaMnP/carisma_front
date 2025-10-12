@@ -71,14 +71,14 @@ export const CartLayout: FC<LayoutProps> = ({ children }) => {
         <div className={s.cartBackground} role='dialog' aria-modal onClick={switchCart}>
           <aside className={s.cartWrapper} onClick={e => e.stopPropagation()}>
             <header className={s.cartHeader}>
-              <h2 className={s.cartName}>Ваш заказ</h2>
-              <button className={s.closeBtn} aria-label='Закрыть корзину' onClick={switchCart}>
+              <h2 className={s.cartName}>Your order</h2>
+              <button className={s.closeBtn} aria-label='Close cart' onClick={switchCart}>
                 ×
               </button>
             </header>
 
             <section className={s.cartItemsList}>
-              {cart.length === 0 && <p className={s.emptyMsg}>Корзина пока пуста</p>}
+              {cart.length === 0 && <p className={s.emptyMsg}>Cart is empty</p>}
 
               {cart.map(item => (
                 <article key={item.id} className={s.cartItem}>
@@ -108,7 +108,7 @@ export const CartLayout: FC<LayoutProps> = ({ children }) => {
                     <button
                       className={s.qtyBtn}
                       onClick={() => decrementItem(item)}
-                      aria-label='Минус один'
+                      aria-label='Minus one'
                     >
                       −
                     </button>
@@ -116,7 +116,7 @@ export const CartLayout: FC<LayoutProps> = ({ children }) => {
                     <button
                       className={s.qtyBtn}
                       onClick={() => incrementItem(item)}
-                      aria-label='Плюс один'
+                      aria-label='Plus one'
                     >
                       +
                     </button>
