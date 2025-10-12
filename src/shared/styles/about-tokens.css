@@ -1,0 +1,88 @@
+/**
+ * Дизайн-токены для страницы About
+ * Базовая конвертация: 1rem = 10px (html { font-size: 62.5%; })
+ * 
+ * ТАБЛИЦА КОНВЕРТАЦИИ px → rem:
+ * 1px   → 0.1rem
+ * 2px   → 0.2rem
+ * 4px   → 0.4rem
+ * 8px   → 0.8rem
+ * 12px  → 1.2rem
+ * 16px  → 1.6rem
+ * 18px  → 1.8rem
+ * 22px  → 2.2rem
+ * 26px  → 2.6rem
+ * 32px  → 3.2rem
+ * 36px  → 3.6rem
+ * 44px  → 4.4rem
+ * 46px  → 4.6rem
+ * 56px  → 5.6rem
+ * 64px  → 6.4rem
+ * 86px  → 8.6rem
+ * 116px → 11.6rem
+ * 124px → 12.4rem
+ * 400px → 40rem
+ * 427px → 42.7rem
+ * 641px → 64.1rem
+ * 800px → 80rem
+ * 1328px → 132.8rem
+ * 1440px → 144rem
+ */
+
+:root {
+    /* Colors */
+    --about-color-bg-primary: #f3f3f3;
+    --about-color-bg-white: #ffffff;
+    --about-color-bg-black: #000000;
+    --about-color-text-primary: #000000;
+    --about-color-text-white: #ffffff;
+    --about-color-border: rgba(0, 0, 0, 0.6);
+    --about-color-placeholder: #d9d9d9;
+
+    /* Spacing */
+    --about-space-xs: 0.4rem;
+    --about-space-sm: 0.8rem;
+    --about-space-md: 1.2rem;
+    --about-space-lg: 1.6rem;
+    --about-space-xl: 2.2rem;
+    --about-space-2xl: 3.2rem;
+    --about-space-3xl: 4.6rem;
+    --about-space-4xl: 5.6rem;
+    --about-space-5xl: 6.4rem;
+    --about-space-6xl: 8.6rem;
+
+    /* Typography - Font Sizes */
+    --about-font-size-sm: 1.6rem;
+    --about-font-size-md: 1.8rem;
+    --about-font-size-lg: 2.2rem;
+    --about-font-size-xl: 2.6rem;
+    --about-font-size-2xl: 3.6rem;
+    --about-font-size-3xl: 6.4rem;
+
+    /* Typography - Line Heights */
+    --about-line-height-none: 1;
+    --about-line-height-tight: 1.2;
+    --about-line-height-normal: 1.5;
+
+    /* Typography - Font Families */
+    --about-font-family-primary: "Averta CY", sans-serif;
+    --about-font-family-secondary: "Suisse Intl", sans-serif;
+
+    /* Font Weights */
+    --about-font-weight-light: 300;
+    --about-font-weight-regular: 400;
+
+    /* Border Radius */
+    --about-radius-sm: 0.4rem;
+
+    /* Layout */
+    --about-max-width: 144rem;
+    --about-content-width: 132.8rem;
+    --about-column-width: 64.1rem;
+    --about-image-height: 40rem;
+    --about-section-height: 80rem;
+
+    /* Borders */
+    --about-border-width: 0.1rem;
+    --about-border-width-md: 0.2rem;
+}

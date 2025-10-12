@@ -1,0 +1,97 @@
+.sale_wrapper {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem;
+  gap: 1.6rem;
+}
+
+.sale_calculator_wrapper {
+  background-color: #F3F3F3;
+  padding: 2.0rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.0rem;
+}
+
+.calculator_hero {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.0rem;
+}
+
+.total {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sale {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.sale_blocks_stack {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.0rem;
+}
+
+.sale_block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+.sale_block_name {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.sale_block_color {
+  height: 0.8rem;
+  width: 100%;
+}
+
+.silver {
+  background: #B6B3A9;
+}
+
+.gold {
+  background: #B4A674;
+}
+
+.platinum {
+  background: #A4B0C6;
+}
+
+.private {
+  background: #F4F2E4;
+}
+
+.sale_block_sale {
+  font-size: 1.6rem;
+}
+
+.sale_block_from_total {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+
+.title {
+  font-weight: 700;
+  font-size: 2.0rem;
+}
+
+.subTitle {
+  font-size: 1.6rem;
+  max-width: 32.0rem;
+  text-wrap: balance;
+}

@@ -1,0 +1,191 @@
+.header {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.navLink {
+  font-family: 'Suisse Intl', sans-serif;
+  font-size: 18px;
+  font-weight: 450;
+  color: rgba(255, 255, 255, 1);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.navLink:hover {
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+.logoContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 116px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 409px;
+}
+
+.contactItem {
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 22px;
+}
+
+.contactItem:hover {
+  text-decoration: none;
+}
+
+.contactItem:first-child {
+  background: rgba(255, 255, 255, 1);
+  color: rgba(0, 0, 0, 1);
+}
+
+.contactItem:last-child {
+  background: rgba(0, 0, 0, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.phoneIcon,
+.locationIcon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.phoneNumber,
+.address {
+  font-family: 'Suisse Intl', sans-serif;
+  font-size: 16px;
+  font-weight: 450;
+  line-height: normal;
+}
+
+.phoneNumber {
+  color: rgba(0, 0, 0, 1);
+}
+
+.address {
+  color: rgba(255, 255, 255, 1);
+}
+
+/* Legacy styles for backward compatibility */
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 0.8rem;
+}
+
+.buttonsWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 40px;
+}
+
+.link_button {
+  background: none;
+  padding: 0.8rem 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  border: none;
+  font-size: 1.6rem;
+  outline: none;
+  cursor: pointer;
+  border-radius: 2.2rem;
+  transition: 300ms;
+}
+
+.link_button:hover {
+  background: rgba(0, 0, 0, 0.06);
+  text-decoration: none !important;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  padding: 0.8rem;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 300ms;
+}
+
+.iconButton:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.languageButton {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  border-radius: 2.2rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  transition: 300ms;
+  min-width: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.languageButton:hover {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 1200px) {
+  .header {
+    display: none;
+  }
+}

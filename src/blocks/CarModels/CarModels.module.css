@@ -1,0 +1,182 @@
+.section {
+    padding: 80px 0;
+}
+
+.container {
+    padding: 5.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    margin: 0 auto;
+    padding: 5.6rem;
+}
+
+/* Main Grid Layout */
+.modelsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+}
+
+.title_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+/* Title Card - First Grid Item */
+.titleCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.2rem;
+    min-height: 200px;
+}
+
+.title {
+    font-size: 2.6rem;
+    font-weight: 400;
+    color: #000000;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: left;
+    line-height: 1;
+}
+
+.titleIndent {
+    margin-left: 1rem;
+}
+
+.searchWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 1.5rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999999;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 2.2rem 2.2rem 2.2rem 4.5rem;
+    border: none;
+    border-radius: 0;
+    background: #FFFFFF;
+    font-size: 2.2rem;
+    color: #333333;
+    outline: none;
+    transition: border-color 300ms;
+}
+
+.searchInput::placeholder {
+    color: #999999;
+    font-size: 1.6rem;
+}
+
+.searchInput:focus {
+    border-color: #333333;
+}
+
+.allModelsButton {
+    background: #FFFFFF;
+    padding: 3.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    cursor: pointer;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: #000000;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    transition: 300ms;
+    font-family: inherit;
+}
+
+.allModelsButton:hover {
+    background: #eaeaea;
+    color: #000000;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .modelsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 60px 0;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .titleCard {
+        gap: 1.5rem;
+    }
+
+    .modelsGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+    }
+
+    .allModelsButton {
+        font-size: 1.8rem;
+        padding: 1.2rem 2rem;
+    }
+}
+
+@media (max-width: 560px) {
+    .section {
+        padding: 0;
+        padding-top: 6rem;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .titleCard {
+        gap: 1.2rem;
+        height: fit-content;
+        grid-column: span 2;
+        min-height: 0;
+        width: 100%;
+    }
+
+    .modelsGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .searchInput {
+        font-size: 1.4rem;
+        padding: 1.2rem 1.2rem 1.2rem 4rem;
+    }
+
+    .searchInput::placeholder {
+        font-size: 1.4rem;
+    }
+
+    .allModelsButton {
+        font-size: 1.6rem;
+        padding: 1rem 1.5rem;
+    }
+}

@@ -1,0 +1,6 @@
+.button_outlined {
+  border: 0.2rem solid #FFFFFF;
+  width: fit-content;
+  border-radius: 5.0rem;
+  padding: 1.4rem 5.0rem;
+}

@@ -1,0 +1,130 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: fixed;
+  top: -20.0rem;
+  left: 0;
+  z-index: 999999;
+  width: 100vw;
+  /* padding: 2.5rem 1.0rem; */
+  transition: 400ms;
+  background: #FFFFFF;
+}
+
+
+.header.show {
+  top: 0;
+}
+
+.header.expanded {
+  top: -15.0rem;
+  border-bottom: 0;
+}
+
+
+.wrapper {
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.6rem 3.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.navLink {
+  font-family: 'Suisse Intl', sans-serif;
+  font-size: 18px;
+  font-weight: 450;
+  color: #000000;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.navLink:hover {
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+.logoContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 116px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 409px;
+}
+
+.contactItem {
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 22px;
+}
+
+.contactItem:hover {
+  text-decoration: none;
+}
+
+.contactItem:first-child {
+  background: rgba(255, 255, 255, 1);
+  border: 1px solid #000000;
+  color: rgba(0, 0, 0, 1);
+}
+
+.contactItem:last-child {
+  background: rgba(0, 0, 0, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.phoneIcon,
+.locationIcon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.phoneNumber,
+.address {
+  font-family: 'Suisse Intl', sans-serif;
+  font-size: 16px;
+  font-weight: 450;
+  line-height: normal;
+}
+
+.phoneNumber {
+  color: rgba(0, 0, 0, 1);
+}
+
+.address {
+  color: rgba(255, 255, 255, 1);
+}
+
+@media (max-width: 1200px) {
+  .header {
+    display: none;
+  }
+}

@@ -1,0 +1,34 @@
+.PhoneInputCountryIcon--border {
+  border-radius: 0.4rem;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.PhoneInputCountrySelect:focus+.PhoneInputCountryIcon--border {
+  box-shadow: none !important;
+}
+
+.PhoneInputCountrySelectArrow {
+  color: #000000;
+}
+
+.PhoneInputCountrySelect:focus+.PhoneInputCountryIcon+.PhoneInputCountrySelectArrow {
+  color: #000000;
+}
+
+.PhoneInput {
+  border: 0.1rem solid rgba(0, 0, 0, 0.4);
+  border-radius: 0.8rem;
+  background: #F3F3F3;
+  padding: 2.0rem;
+
+}
+
+.PhoneInput input {
+  font-size: 1.6rem;
+  padding-left: 1.0rem;
+  border: none;
+  stroke: none;
+  outline: none;
+  background: transparent;
+}

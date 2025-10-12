@@ -1,0 +1,371 @@
+.productGridWrapper{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    gap: 2.2rem;
+}
+
+.breadcrubs{
+  padding: 0rem 8.0rem;
+  padding-top: 1.2rem;
+}
+
+.productGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    /* max-width: 132.0rem; */
+    width: 100%;
+    padding: 1.2rem 8.0rem;
+    padding-top: 0;
+}
+
+.categoryWrapper{
+    display: flex;
+    width: 100%;
+    padding: 0 8.0rem;
+}
+
+.productImages{
+    display: flex;
+    width: 100%;
+    aspect-ratio: 1/1;
+}
+
+.image{
+    width: 100% !important;
+    height: 100%;
+    overflow: hidden;
+}
+
+.swiper{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* border-radius: 1.6rem; */
+    z-index: 3 !important;
+}
+
+.aboutProduct{
+    /* background: #F4F2E4; */
+    width: 100%;
+    height: 100%;
+    /* border-radius: 1.6rem; */
+    padding: 5.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.2rem;
+}
+
+.pageBlock{
+    /* background: #F4F2E4; */
+    width: 100%;
+    height: 100%;
+    /* border-radius: 1.6rem; */
+    padding: 5.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+}
+
+.name{
+    font-size: 6.4rem;
+    font-weight: 200;
+    color: #302E2C;
+}
+
+.productHeading{
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+.description{
+    font-size: 2.0rem;
+    font-weight: 300;
+    text-wrap: balance;
+    color: #302E2C;
+}
+
+.feauturesList{
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+.feauture {
+  display: flex;
+  align-items: flex-end; /* или baseline, как вам нужно */
+  gap: 1.0rem;
+  width: 100%;
+}
+
+.feautureName {
+  font-size: 1.8rem;
+  font-weight: 300;
+  white-space: nowrap;
+}
+
+.divider {
+  flex: 1;
+  min-width: 5.0rem;
+  height: 0.1rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.feautureValue {
+  text-align: right;
+  font-size: 1.8rem;
+  font-weight: 300;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.selector {
+  padding: 0.5rem 1.0rem;
+  min-width: 20.0rem;
+}
+
+.priceBlock{
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.priceWrapper{
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-end;
+}
+
+.price{
+    font-size: 4.6rem;
+    color: #3C5F3B;
+    text-wrap: nowrap;
+}
+
+.priceOld{
+    color: #1b2c1a;
+    font-size: 3.2rem;
+    opacity: 0.6;
+    font-weight: 300;
+    text-decoration: line-through;
+    text-wrap: nowrap;
+}
+
+.buttonWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.addToCart{
+    padding: 1.6rem 6.4rem;
+    /* border-radius: 1.2rem; */
+    background: #3C5F3B;
+    color: #FFF;
+    font-size: 1.8rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.blockHeading{
+    font-size: 3.2rem;
+    font-weight: 300;
+}
+
+.productInfo{
+    font-size: 2.0rem;
+    font-weight: 300;
+    text-wrap: balance;
+    white-space: pre-wrap;
+}
+
+.recipe{
+    display: flex;
+    flex-direction: column;
+    font-size: 2.0rem;
+    font-weight: 300;
+    gap: 1.2rem;
+    width: 100%;
+}
+
+.recipeRow{
+    font-size: 1.8rem;
+    text-wrap: balance;
+    white-space: pre-wrap;
+}
+
+.recipeRowFootnote{
+    font-size: 1.8rem;
+    text-wrap: balance;
+    white-space: pre-wrap;
+    opacity: 0.5;
+}
+
+.recipeRow span{
+    font-weight: 400;
+}
+
+@media (max-width: 1024px) {
+  .productImages{
+    aspect-ratio: 1/1;
+  }
+  .breadcrubs{
+    padding: 1.2rem 4.0rem;
+    padding-bottom: 0;
+  }
+  .productGrid {
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem 4.0rem;
+    padding-top: 0;
+    gap: 1.6rem;
+  }
+}
+
+
+
+/* Tablet (≤76.8rem) */
+@media (max-width: 768px) {
+    .page{
+      margin-top: 8.4rem;
+    }
+    .productGridWrapper {
+      gap: 1.6rem;
+    }
+
+    .categoryWrapper {
+      padding: 0 4.0rem;
+    }
+
+    .productImages {
+      aspect-ratio: 4/3;
+    }
+
+    .aboutProduct,
+    .pageBlock {
+      padding: 4.0rem;
+    }
+
+    .name {
+      font-size: 4.8rem;
+    }
+
+    .description {
+      font-size: 1.8rem;
+    }
+
+    .feautureName,
+    .feautureValue {
+      font-size: 1.6rem;
+    }
+
+    .priceBlock {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2.2rem;
+      padding-top: 1.2rem;
+    }
+
+    .price {
+      font-size: 4.6rem;
+    }
+
+    .priceOld {
+      font-size: 3.6rem;
+    }
+
+    .buttonWrapper{
+      width: 100%;
+    }
+
+    .addToCart {
+      width: 100%;
+      padding: 2.2rem !important;
+      font-size: 1.6rem;
+    }
+
+    .blockHeading {
+      font-size: 2.8rem;
+    }
+
+    .productInfo,
+    .recipeRow,
+    .recipeRowFootnote {
+      font-size: 1.6rem;
+    }
+  }
+
+  /* Mobile (≤48.0rem) */
+  @media (max-width: 480px) {
+    .selector {
+      min-width: 15.0rem;
+    }
+    .breadcrubs{
+      padding: 0.8rem 2.0rem;
+      padding-bottom: 0;
+    }
+    .productGrid {
+      padding: 0.8rem 2.0rem;
+      gap: 1.2rem;
+    }
+
+    .categoryWrapper {
+      padding: 0 2.0rem;
+    }
+
+    .aboutProduct,
+    .pageBlock {
+      padding: 2.4rem 0;
+    }
+
+    .name {
+      font-size: 3.2rem;
+    }
+
+    .description {
+      font-size: 1.6rem;
+    }
+
+    .feautureName,
+    .feautureValue {
+      font-size: 1.4rem;
+    }
+
+    .priceBlock {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.2rem;
+    }
+
+    .price {
+      font-size: 2.8rem;
+    }
+
+    .priceOld {
+      font-size: 2.4rem;
+    }
+
+    .addToCart {
+      padding: 1.2rem 3.2rem;
+      font-size: 1.4rem;
+    }
+
+    .blockHeading {
+      font-size: 2.4rem;
+    }
+
+    .productInfo,
+    .recipeRow,
+    .recipeRowFootnote {
+      font-size: 1.4rem;
+    }
+  }
+  

@@ -1,0 +1,66 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: 2.0rem;
+  align-self: start;
+  width: 100%;
+  transition: 400ms;
+}
+
+.container.down {
+  top: 10.4rem;
+}
+
+.paper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #F4F2E4;
+  overflow: hidden;
+  font-size: 1.6rem;
+}
+
+.button {
+  padding: 1.2rem 1.6rem;
+  color: #120C08;
+  user-select: none;
+  text-wrap: nowrap;
+}
+
+.button_folding {
+  padding: 1.2rem 1.6rem;
+  color: #120C08;
+  user-select: none;
+  text-wrap: nowrap;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.arrow {
+  transform: rotate(270deg);
+  transition: transform .35s;
+}
+
+.arrow.visible {
+  transform: rotate(90deg);
+}
+
+.selected {
+  background: #3C5F3B;
+  color: #FFFFFF;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .container {
+    position: static;
+  }
+}

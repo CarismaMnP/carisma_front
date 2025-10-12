@@ -1,0 +1,52 @@
+.form_wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  padding: 2.0rem;
+  max-width: 42.0rem;
+}
+
+.submit_button {
+  font-size: 1.6rem;
+  background: #3C5F3B;
+  padding: 2.0rem 2.2rem;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.info_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title {
+  font-size: 3.6rem;
+}
+
+.subTitle {
+  font-size: 1.8rem;
+}
+
+.phone {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.ya_napisal_ne_tot_nomer {
+  color: #3C5F3B;
+  font-size: 1.6rem;
+}
+
+.ya_napisal_ne_tot_nomer:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.codeInputStack {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+}

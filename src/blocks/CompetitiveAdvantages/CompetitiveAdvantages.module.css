@@ -1,0 +1,139 @@
+.advantages {
+    width: 100%;
+    background-color: var(--about-color-bg-white);
+    padding: 8.4rem 5.6rem;
+    margin-top: 12rem;
+}
+
+.container {
+    margin: 0 auto;
+}
+
+.title {
+    font-family: var(--about-font-family-primary);
+    font-weight: var(--about-font-weight-regular);
+    font-size: 3.6rem;
+    line-height: var(--about-line-height-none);
+    color: var(--about-color-text-primary);
+    margin: 0;
+    margin-bottom: 1.2rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+}
+
+.cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 4.6rem 0;
+    border-bottom: 0.1rem solid var(--about-color-border);
+}
+
+.cell:nth-child(odd) {
+    border-right: 0.1rem solid var(--about-color-border);
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.cell:nth-child(even) {
+    padding-left: 2.2rem;
+    padding-right: 0;
+}
+
+/* Убираем bottom border у последних ячеек */
+.cell:nth-last-child(-n+2) {
+    border-bottom: none;
+}
+
+.cellTitle {
+    font-family: var(--about-font-family-primary);
+    font-weight: var(--about-font-weight-regular);
+    font-size: 2.6rem;
+    line-height: var(--about-line-height-none);
+    color: var(--about-color-text-primary);
+    margin: 0;
+}
+
+.cellDescription {
+    font-family: var(--about-font-family-primary);
+    font-weight: var(--about-font-weight-regular);
+    font-size: 2.2rem;
+    line-height: var(--about-line-height-none);
+    color: var(--about-color-text-primary);
+    margin: 0;
+}
+
+/* Tablet */
+@media (max-width: 102.4rem) {
+    .advantages {
+        padding: 5rem 3.2rem;
+        margin-top: 8rem;
+    }
+
+    .title {
+        font-size: 2.8rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .cell {
+        padding: 3.6rem 0;
+    }
+
+    .cell:nth-child(even) {
+        padding-left: 1.6rem;
+    }
+
+    .cellTitle {
+        font-size: 2.2rem;
+    }
+
+    .cellDescription {
+        font-size: 1.8rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 48rem) {
+    .advantages {
+        padding: 4rem 1.6rem;
+        margin-top: 6rem;
+    }
+
+    .title {
+        font-size: 2.4rem;
+        margin-bottom: 3.2rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cell {
+        padding: 2.4rem 0;
+        border-right: none !important;
+    }
+
+    .cell:nth-child(odd) {
+        border-right: none;
+    }
+
+    .cell:nth-child(even) {
+        padding-left: 0;
+    }
+
+    .cell:last-child {
+        border-bottom: none;
+    }
+
+    .cellTitle {
+        font-size: 2rem;
+    }
+
+    .cellDescription {
+        font-size: 1.6rem;
+    }
+}
