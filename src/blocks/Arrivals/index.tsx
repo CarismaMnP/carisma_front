@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { apiUrlBuilder } from '@/shared/utils/urlBuilder';
 import Link from 'next/link';
 import { TextEffectOne } from 'react-text-animate';
+import { Reveal } from '@/shared/ui/Reveal';
 
 interface IArrival {
     id: string;
@@ -133,8 +134,10 @@ const ArrivalCard = ({ arrival, index, totalCount, scrollYProgress, isMobile }: 
             </div>
 
             <div className={s.cardContent}>
-                <TextEffectOne staggerDuration={0.02} animateOnce={false} text={arrival.model + ' ' + arrival.year} />
-                <TextEffectOne staggerDuration={0.02} initialDelay={0.1} animateOnce={false} text={arrival.body} />
+                <Reveal delay={0} className={s.cardWrapper} >
+                    {arrival.model} {arrival.year} <br />
+                    {arrival.body}
+                </Reveal>
             </div>
 
             <div className={s.cardOverlay}>
@@ -145,7 +148,7 @@ const ArrivalCard = ({ arrival, index, totalCount, scrollYProgress, isMobile }: 
                     </svg>
                 </Link>
             </div>
-        </motion.div>
+        </motion.div >
     );
 };
 

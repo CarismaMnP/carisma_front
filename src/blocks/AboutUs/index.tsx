@@ -13,9 +13,11 @@ export const AboutUs = () => {
                         <div className={s.contentLeft}>
                             <TextEffectOne className={s.sectionTitle} staggerDuration={0.03} animateOnce={false} text="ABOUT US" />
                             <div className={s.description}>
-                                <TextEffectOne staggerDuration={0.02} initialDelay={0.1} animateOnce={false} text="We specialize in dismantling BMW" />
-                                <TextEffectOne staggerDuration={0.02} initialDelay={0.3} animateOnce={false} text="vehicles and offering high-quality" />
-                                <TextEffectOne staggerDuration={0.02} initialDelay={0.5} animateOnce={false} text="spare parts for resale." />
+                                <Reveal delay={0.4}>
+                                    We specialize in dismantling BMW
+                                    vehicles and offering high-quality
+                                    spare parts for resale.
+                                </Reveal>
                             </div>
                         </div>
 

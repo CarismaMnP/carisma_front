@@ -6,14 +6,15 @@
   position: fixed;
   z-index: 999;
   bottom: 10px;
-  width: 100%;
+  right: 10px;
+  /* width: 100%; */
 }
 
 .cookie_modal {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #F0EFE5;
+  background-color: #FFFFFF;
   border-radius: 20px;
   padding: 20px;
   font-size: 2rem;
@@ -32,6 +33,6 @@
 
 .button:hover {
   cursor: pointer;
-  background-color: #3C5F3B;
-  color: white;
+  /* background-color: #3C5F3B; */
+  /* color: white; */
 }

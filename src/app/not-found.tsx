@@ -25,8 +25,8 @@ const Hero = () => {
           />
         </div>
         <div className={s.text}>
-          <h1>Страница не найдена</h1>
-          <Link href="/" className={s.button}>Перейти на главную</Link>
+          <h1>Page not found</h1>
+          <Link href="/" className={s.button}>Go to home</Link>
         </div>
       </main>
     </div>

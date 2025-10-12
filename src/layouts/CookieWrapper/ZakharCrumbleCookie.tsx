@@ -23,8 +23,8 @@ export const ZakharCrumbleCookie: FC = () => {
   return (
     <div className={s.wrapper}>
       <div className={s.cookie_modal}>
-        <p>Мы используем Cookies</p>
-        <button className={s.button} onClick={setAccept}>Понятно</button>
+        <p>We use Cookies</p>
+        <button className={s.button} onClick={setAccept}>OK</button>
       </div>
     </div>
   );
