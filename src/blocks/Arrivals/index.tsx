@@ -96,15 +96,16 @@ const ArrivalCard = ({ arrival, index, totalCount, scrollYProgress, isMobile }: 
     return (
         <motion.div
             className={s.arrivalCard}
-            style={isMobile ? { zIndex } : {
-                y: ySpring,
-                top: minusY,
-                scale: scaleSpring,
-                zIndex,
-                // очень важно: масштаб от низа карточки
-                originY: 1,
-                // transformOrigin: 'center top'
-            }}
+            style={isMobile ? { zIndex } :
+                {
+                    y: ySpring,
+                    top: minusY,
+                    scale: scaleSpring,
+                    zIndex,
+                    // очень важно: масштаб от низа карточки
+                    originY: 1,
+                    // transformOrigin: 'center top'
+                }}
             ref={selfRef}
             // никаких y в whileInView — иначе конфликт
             whileInView={{ opacity: 1 }}
@@ -185,7 +186,7 @@ export const Arrivals = () => {
                     {arrivals.map((arrival, index) => (
                         <ArrivalCard
                             key={arrival.id}
-                            isMobile
+                            isMobile={isMobile}
                             arrival={arrival}
                             index={index}
                             totalCount={arrivals.length}
