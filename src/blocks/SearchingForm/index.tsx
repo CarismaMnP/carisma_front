@@ -26,7 +26,7 @@ export const SearchingForm = () => {
         <div className={s.searchingForm}>
             <div className={s.container}>
                 <h2 className={s.title}>
-                    To assist you better could you let us know<br />
+                    To assist you better could you let us know <br />
                     the specific part you are searching for?
                 </h2>
 

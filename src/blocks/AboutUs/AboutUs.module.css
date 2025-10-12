@@ -181,13 +181,20 @@
 
     .content {
         gap: 2.2rem;
+        display: flex;
+        flex-direction: column;
     }
 
-    .description p {
-        font-size: 2.2rem;
+    .contentLeft {
+        gap: 1.6rem;
+    }
+
+    .description {
+        font-size: 1.8rem;
     }
 
     .statsGrid {
+        width: 100%;
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto;
         gap: 1.2rem;
@@ -195,7 +202,9 @@
 
     .statCard {
         padding: 2.2rem;
-        height: 12rem;
+        height: auto;
+        gap: 2.2rem;
+        width: 100%;
     }
 
     .statCardBlack {
@@ -218,14 +227,15 @@
     }
 
     .statDescription {
-        font-size: 2.2rem;
+        font-size: 1.6rem;
     }
 
     .callButton {
-        padding: 2.2rem 2.4rem;
+        padding: 2.2rem 2.2rem;
     }
 
     .callButton span {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        padding: 0;
     }
 }

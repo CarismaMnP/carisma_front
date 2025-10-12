@@ -11,7 +11,7 @@ import { CartStoreProvider } from '@/shared/store/CartStoreProvider';
 import { CartLayout } from '@/layouts/CartLayout';
 import { UserStoreProvider } from '@/shared/stores/UserStore/UserStoreProvider';
 import { ZakharCrumbleCookie } from '@/layouts/CookieWrapper';
-import { ReactLenis } from 'lenis/react'
+// import { ReactLenis } from 'lenis/react'
 
 export const metadata: Metadata = {
   title: 'CARisma M&P',
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       </head>
 
       <body className={`${AvertaCY.className}`}>
-        <ReactLenis root options={{ autoRaf: true, duration: 1.5, lerp: 0.1 }} />
+        {/* <ReactLenis root options={{ autoRaf: true, duration: 1.5, lerp: 0.1 }} /> */}
         <UserStoreProvider>
           <CartStoreProvider>
             <SessionLayout>

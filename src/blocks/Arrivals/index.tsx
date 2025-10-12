@@ -97,7 +97,7 @@ const ArrivalCard = ({ arrival, index, totalCount, scrollYProgress, isMobile }: 
     return (
         <motion.div
             className={s.arrivalCard}
-            style={isMobile ? { zIndex } :
+            style={isMobile ? { y: 0 } :
                 {
                     y: ySpring,
                     top: minusY,
@@ -134,8 +134,8 @@ const ArrivalCard = ({ arrival, index, totalCount, scrollYProgress, isMobile }: 
             </div>
 
             <div className={s.cardContent}>
-                <Reveal delay={0} className={s.cardWrapper} >
-                    {arrival.model} {arrival.year} <br />
+                <Reveal className={s.cardWrapper} >
+                    {isMobile ? "true" : "false"} {arrival.model} {arrival.year} <br />
                     {arrival.body}
                 </Reveal>
             </div>

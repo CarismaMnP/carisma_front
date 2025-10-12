@@ -61,7 +61,7 @@
 
 @media (max-width: 600px) {
     .footer {
-        padding: 1.6rem;
+        padding: 3.2rem 1.6rem;
     }
 
     .container {
@@ -75,6 +75,7 @@
     }
 
     .legal {
+        flex-direction: column-reverse;
         font-size: 1.4rem;
         gap: 0.6rem;
     }
