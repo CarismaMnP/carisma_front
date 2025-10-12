@@ -15,7 +15,7 @@ import axios from 'axios';
 import { useCartStore } from '@/shared/store/CartStoreProvider';
 import { CategoryCard } from '@/components/CategoryCard';
 import { BurgerNavbar } from '@/components/BurgerNavbar';
-import { NotCoffee } from '@/blocks/NotCoffee';
+// import { NotCoffee } from '@/blocks/NotCoffee';
 import { useUserStore } from '@/shared/stores/UserStore/UserStoreProvider';
 import { StickyNavbar } from '@/components/StickyNavbar';
 import { FreeDelivery } from '@/blocks/FreeDelivery';
@@ -91,11 +91,11 @@ export default function CatalogPage() {
               },
               ...(parentCategoryId
                 ? [
-                    {
-                      name: productInfo?.category?.parentCategory?.name || '',
-                      link: `/catalog?category=${parentCategoryId}`,
-                    },
-                  ]
+                  {
+                    name: productInfo?.category?.parentCategory?.name || '',
+                    link: `/catalog?category=${parentCategoryId}`,
+                  },
+                ]
                 : []),
               {
                 name: productInfo?.category?.name || '',
@@ -275,7 +275,7 @@ export default function CatalogPage() {
 
       <FreeDelivery product={productInfo} />
 
-      <NotCoffee />
+      {/* <NotCoffee /> */}
       <Footer />
     </div>
   );

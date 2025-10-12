@@ -23,6 +23,36 @@ interface ArrivalCardProps {
     isMobile: boolean;
 }
 
+const data = [
+    {
+        "id": 3,
+        "model": "3 series",
+        "body": "E46 318i N46",
+        "year": 2002,
+        "imageURL": "arrivals/2025/09/1759251326344_75a0f59c8c004bdd.png",
+        "createdAt": "2025-09-30T16:55:26.978Z",
+        "updatedAt": "2025-09-30T16:55:26.978Z"
+    },
+    {
+        "id": 2,
+        "model": "3 series",
+        "body": "E46 318i N46",
+        "year": 2002,
+        "imageURL": "arrivals/2025/09/1759251308944_192417e38b113fe6.png",
+        "createdAt": "2025-09-30T16:55:09.481Z",
+        "updatedAt": "2025-09-30T16:55:09.481Z"
+    },
+    {
+        "id": 1,
+        "model": "3 series",
+        "body": "E46 318i N46",
+        "year": 2002,
+        "imageURL": "arrivals/2025/09/1759251292262_93a400978b7df819.png",
+        "createdAt": "2025-09-21T12:11:46.392Z",
+        "updatedAt": "2025-09-30T16:54:54.231Z"
+    }
+]
+
 
 const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
 
@@ -119,7 +149,7 @@ const ArrivalCard = ({ arrival, index, totalCount, scrollYProgress, isMobile }: 
 };
 
 export const Arrivals = () => {
-    const [arrivals, setArrivals] = useState<IArrival[]>([]);
+    const [arrivals, setArrivals] = useState<IArrival[]>(data as any);
     const [isMobile, setIsMobile] = useState(false);
     const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -133,15 +163,15 @@ export const Arrivals = () => {
         if (window.innerWidth <= 580) {
             setIsMobile(true);
         }
-        (async () => {
-            try {
-                const res = await fetch(apiUrlBuilder('/arrivals'));
-                const data = await res.json();
-                setArrivals(data);
-            } catch (e) {
-                console.log(e);
-            }
-        })();
+        // (async () => {
+        //     try {
+        //         const res = await fetch(apiUrlBuilder('/arrivals'));
+        //         const data = await res.json();
+        //         setArrivals(data);
+        //     } catch (e) {
+        //         console.log(e);
+        //     }
+        // })();
     }, []);
 
     // высота секции: чем больше карточек, тем длиннее анимация
