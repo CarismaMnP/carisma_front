@@ -262,7 +262,7 @@ export const Order = () => {
     widget.pay(
       'charge',
       {
-        publicId: process.env.NEXT_PUBLIC_CP_PUBLIC_ID,
+        // publicId: process.env.NEXT_PUBLIC_CP_PUBLIC_ID,
         description: `Заказ №${invoiceId}`,
         amount,
         currency,
