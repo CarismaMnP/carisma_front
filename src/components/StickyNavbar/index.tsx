@@ -49,9 +49,11 @@ export const StickyNavbar = ({ alwaysShow = false }: { alwaysShow?: boolean }) =
         </div>
 
         {/* Logo */}
-        <div className={s.logoContainer}>
-          <CarismaLogo color='#000000' />
-        </div>
+        <Link href='/'>
+          <div className={s.logoContainer}>
+            <CarismaLogo color='#000000' />
+          </div>
+        </Link>
 
         {/* Contact Information */}
         <div className={s.contactInfo}>

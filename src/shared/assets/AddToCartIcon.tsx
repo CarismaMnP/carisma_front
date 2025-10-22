@@ -26,7 +26,7 @@ export const AddToCartIcon: FC<IIcon> = ({ color }) => {
           strokeLinecap='round'
           strokeLinejoin='round'
         />
-        <path d='M25.5 1V12M20 6.5H31' stroke='#F4F2E4' stroke-width='1.6' stroke-linecap='round' />
+        <path d='M25.5 1V12M20 6.5H31' stroke='#F4F2E4' strokeWidth='1.6' strokeLinecap='round' />
       </g>
       <defs>
         <clipPath id='clip0_721_3383'>

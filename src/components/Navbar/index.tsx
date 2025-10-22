@@ -37,9 +37,11 @@ export const Navbar: FC<INavbarProps> = ({ black }) => {
         </div>
 
         {/* Logo */}
-        <div className={s.logoContainer}>
-          <CarismaLogo color='#FFFFFF' />
-        </div>
+        <Link href='/'>
+          <div className={s.logoContainer}>
+            <CarismaLogo color='#FFFFFF' />
+          </div>
+        </Link>
 
         {/* Contact Information */}
         <div className={s.contactInfo}>

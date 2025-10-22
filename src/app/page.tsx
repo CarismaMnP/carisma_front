@@ -16,6 +16,7 @@ import { AboutUs } from '@/blocks/AboutUs';
 import { Arrivals } from '@/blocks/Arrivals';
 import { Footer } from '@/blocks/Footer';
 import { SearchingForm } from '@/blocks/SearchingForm';
+import { FreshStock } from '@/blocks/FreshStock';
 
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
       <StickyNavbar />
       <Hero />
       <PopularCategories />
+      <FreshStock />
       <CarModels />
       <Arrivals />
       <AboutUs />
