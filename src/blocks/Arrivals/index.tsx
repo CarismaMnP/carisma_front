@@ -141,7 +141,7 @@ const ArrivalCard = ({ arrival, index, totalCount, scrollYProgress, isMobile }: 
             </div>
 
             <div className={s.cardOverlay}>
-                <Link href={`/catalog?model=${arrival.model}&year=${arrival.year}`} className={s.viewButton}>
+                <Link href={`/catalog?filters=${JSON.stringify({ model: '7-series' })}`} className={s.viewButton}>
                     View Parts
                     <svg width="10" height="16" viewBox="0 0 10 20" fill="none">
                         <path d="M1 1L9 10L1 19" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />

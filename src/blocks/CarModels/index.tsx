@@ -166,7 +166,7 @@ export const CarModels: React.FC = () => {
                             <CarModelCard
                                 model={model.model}
                                 image={model.image}
-                                href={`/catalog?model=${model.model}`}
+                                href={`/catalog?filters=${JSON.stringify({ model: '7-series' })}`}
                             />
                         </Reveal>
                     ))}

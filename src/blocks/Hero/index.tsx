@@ -71,7 +71,7 @@ export const Hero = () => {
     if (selectedEngine) params.append('engine', selectedEngine);
     if (oemNumber) params.append('oem', oemNumber);
 
-    router.push(`/catalog?${params.toString()}`);
+    router.push(`/catalog?filters=${JSON.stringify({ make: selectedMake, model: selectedModel, oemNumber })}`);
   };
 
   const availableModels = getModelsByMake(carMockData, selectedMake);

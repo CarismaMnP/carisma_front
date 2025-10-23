@@ -10,6 +10,7 @@
   transition: 400ms;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(20px);
+  min-height: 45px;
 }
 
 .logoContainer {

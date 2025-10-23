@@ -1,9 +1,13 @@
 'use client';
-import { useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import s from './SearchingForm.module.css';
 import Image from 'next/image';
 
-export const SearchingForm = () => {
+interface SearchingFormProps {
+    title?: ReactNode
+}
+
+export const SearchingForm: FC<SearchingFormProps> = ({ title }) => {
     const [selectedMake, setSelectedMake] = useState('');
     const [selectedModel, setSelectedModel] = useState('');
     const [selectedGeneration, setSelectedGeneration] = useState('');
@@ -25,10 +29,16 @@ export const SearchingForm = () => {
     return (
         <div className={s.searchingForm}>
             <div className={s.container}>
-                <h2 className={s.title}>
-                    To assist you better could you let us know <br />
-                    the specific part you are searching for?
-                </h2>
+                {title ?
+                    <h2 className={s.title}>
+                        {title}
+                    </h2>
+                    :
+                    <h2 className={s.title}>
+                        To assist you better could you let us know <br />
+                        the specific part you are searching for?
+                    </h2>
+                }
 
                 <form className={s.form} onSubmit={handleSubmit}>
                     <div className={s.fieldsWrapper}>

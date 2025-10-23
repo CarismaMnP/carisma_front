@@ -1,182 +1,117 @@
-'use client';
-
+import { Dispatch, FC, SetStateAction } from 'react';
 import s from './CatalogFilters.module.css';
-import { FC, useEffect, useState } from 'react';
-import { ICategory } from '@/shared/types/Category';
-import { apiUrlBuilder } from '@/shared/utils/urlBuilder';
-import { useSearchParams } from 'next/navigation';
-import { LeftArrow } from '@/shared/assets/LeftArrow';
+import { TFilters } from '@/blocks/Catalog';
+import { categoriesOptions, generationOptions, makeOptions, modelOptions } from '@/shared/data/filtersOptions';
 
-interface ICatalogFiltersProps {
-  selectedCategory: ICategory | null;
-  setSelectedCategory: (category: ICategory | null) => void;
-
-  selectedSubCategory: ICategory | null;
-  setSelectedSubCategory: (category: ICategory | null) => void;
-
-  selectedRegions: string[];
-  setSelectedRegions: (regions: string[]) => void;
+interface CatalogFiltersProps {
+  filters: TFilters
+  setFilters: Dispatch<SetStateAction<TFilters>>
 }
 
-export const CatalogFilters: FC<ICatalogFiltersProps> = props => {
-  const {
-    selectedCategory,
-    setSelectedCategory,
-    selectedSubCategory,
-    setSelectedSubCategory,
-    selectedRegions,
-    setSelectedRegions,
-  } = props;
+export const CatalogFilters: FC<CatalogFiltersProps> = ({ filters, setFilters }) => {
 
-  const [regionsIsVisible, setRegionsIsVisible] = useState(false);
-
-  const [categories, setCategories] = useState<ICategory[]>([]);
-  const [subCategories, setSubCategories] = useState<ICategory[]>([]);
-
-  const [regions, setRegions] = useState<string[]>([]);
-
-  const searchParams = useSearchParams();
-
-  const [show, setShow] = useState(false)
-
-  const controlNavbar = () => {
-    if(window.innerWidth > 1200){
-      if (window.scrollY > 0) { // if scroll down hide the navbar
-        setShow(false); 
-      } else { // if scroll up show the navbar
-        setShow(true);  
-      }
-    } else {
-      setShow(false)
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', controlNavbar);
-    return () => {
-       window.removeEventListener('scroll', controlNavbar);
-    };
-  }, []);
-
-  async function getCategories() {
-    try {
-      const res = await fetch(apiUrlBuilder('/category/main'));
-      const { categories, regions } = await res.json();
-
-      setCategories(categories);
-      setRegions(regions);
-      const categoryId = searchParams?.get('category');
-      const subcategoryId = searchParams?.get('subcategory');
-      const selectedCategory = categories.find((x: any) => x.id === Number(categoryId)) || null;
-
-      if (categoryId) {
-        setSelectedCategory(selectedCategory);
-      }
-      if (selectedCategory && subcategoryId) {
-        const res = await fetch(apiUrlBuilder(`/category/by/parent/${selectedCategory.id}`));
-        const subCategories = await res.json();
-
-        setSelectedSubCategory(
-          subCategories.find((x: any) => x.id === Number(subcategoryId)) || null,
-        );
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function getSubCategories() {
-    try {
-      const res = await fetch(apiUrlBuilder(`/category/by/parent/${selectedCategory?.id}`));
-      setSubCategories(await res.json());
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const selectRegion = (region: string) => {
-    if (selectedRegions.includes(region)) {
-      setSelectedRegions(selectedRegions.filter(reg => reg !== region));
-    } else {
-      setSelectedRegions([...selectedRegions, region]);
-    }
-  };
-
-  useEffect(() => {
-    getCategories();
-  }, []);
-
-  useEffect(() => {
-    setSelectedSubCategory(null);
-    setSubCategories([]);
-    if (selectedCategory !== null) {
-      getSubCategories();
-    }
-  }, [selectedCategory]);
+  const availableGenerations = filters?.model ? (generationOptions as any)?.[filters.model] || [] : []
 
   return (
-    <div className={`${s.container} ${show ? "" : s.down}`}>
-      <div className={s.paper}>
-        <div
-          className={`${s.button} ${selectedCategory === null && s.selected}`}
-          onClick={() => setSelectedCategory(null)}
+    <>
+      <div className={s.selectGroup}>
+        <select
+          id="make"
+          className={s.select}
+          value={filters?.make || ''}
+          onChange={(e) => {
+            const nextMake = e.target.value || undefined
+            setFilters((prev) => {
+              const next: TFilters = { ...prev, make: nextMake }
+              return next
+            })
+          }}
         >
-          Все категории
-        </div>
-        {categories &&
-          !!categories?.length &&
-          categories?.map(category => (
-            <div
-              key={category?.id}
-              className={`${s.button} ${selectedCategory?.id === category?.id && s.selected}`}
-              onClick={() => {setSelectedCategory(category); setSelectedRegions([])}}
-            >
-              {category?.name}
-            </div>
+          <option value=''>Make</option>
+          {makeOptions.map((opt) => (
+            <option key={opt.value} value={opt.value}>{opt.title}</option>
           ))}
+        </select>
       </div>
 
-      {subCategories && !!subCategories?.length && (
-        <div className={s.paper}>
-          <div
-            className={`${s.button} ${selectedSubCategory === null && s.selected}`}
-            onClick={() => setSelectedSubCategory(null)}
-          >
-            Все коллекции
-          </div>
-          {subCategories?.map(subCategory => (
-            <div
-              key={subCategory?.id}
-              className={`${s.button} ${selectedSubCategory?.id === subCategory?.id && s.selected}`}
-              onClick={() => setSelectedSubCategory(subCategory)}
-            >
-              {subCategory?.name}
-            </div>
+      <div className={s.selectGroup}>
+        <select
+          id="model"
+          className={s.select}
+          value={filters?.model || ''}
+          onChange={(e) => {
+            const nextModel = e.target.value || undefined
+            setFilters((prev) => {
+              const next: TFilters = { ...prev, model: nextModel }
+              // Reset generation if it's not in the new model list
+              const gens = nextModel ? (generationOptions as any)[nextModel] || [] : []
+              if (!gens.find((g: any) => g.value === prev.generation)) {
+                next.generation = undefined
+              }
+              return next
+            })
+          }}
+        >
+          <option value=''>Model</option>
+          {modelOptions.map((opt) => (
+            <option key={opt.value} value={opt.value}>{opt.title}</option>
           ))}
-        </div>
-      )}
-
-      <div className={s.paper}>
-        <div className={`${s.button_folding}`} onClick={() => setRegionsIsVisible(prev => !prev)}>
-          <span>Страна</span>
-          <div className={`${s.arrow} ${regionsIsVisible ? s.visible : ''}`}>
-            <LeftArrow />
-          </div>
-        </div>
-        {regionsIsVisible && (
-          <>
-            {regions?.map(region => (
-              <div
-                key={region}
-                className={`${s.button} ${selectedRegions.includes(region) && s.selected}`}
-                onClick={() => selectRegion(region)}
-              >
-                {region}
-              </div>
-            ))}
-          </>
-        )}
+        </select>
       </div>
-    </div>
-  );
-};
+
+      <div className={s.selectGroup}>
+        <select
+          id="generation"
+          className={s.select}
+          value={filters?.generation || ''}
+          onChange={(e) => {
+            const nextGeneration = e.target.value || undefined
+            setFilters((prev) => ({ ...prev, generation: nextGeneration }))
+          }}
+          disabled={!filters?.model}
+        >
+          <option value=''>Generation</option>
+          {availableGenerations.map((opt: any) => (
+            <option key={opt.value} value={opt.value}>{opt.title}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className={s.selectGroup}>
+        <select
+          id="category"
+          className={s.select}
+          value={filters?.category || ''}
+          onChange={(e) => {
+            const nextCategory = e.target.value || undefined
+            setFilters((prev) => ({ ...prev, category: nextCategory }))
+          }}
+        >
+          <option value=''>Category</option>
+          {categoriesOptions.map((opt) => (
+            <option key={opt.value} value={opt.value}>{opt.title}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className={s.oemInputWrapper}>
+        <svg className={s.searchIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input
+          id="oem"
+          type="text"
+          value={filters?.oemNumber || ''}
+          onChange={(e) => {
+            const nextOemNumber = e.target.value || undefined
+            setFilters((prev) => ({ ...prev, oemNumber: nextOemNumber }))
+          }}
+          placeholder="OEM Number / Part Name"
+          className={s.oemInput}
+        />
+      </div>
+
+    </ >
+  )
+}

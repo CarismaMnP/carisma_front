@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import s from './BurgerNavbar.module.css';
 import { PersonIcon, CartIcon } from '@/shared/assets';
 import Link from 'next/link';
@@ -7,7 +7,11 @@ import { useCartStore } from '@/shared/store/CartStoreProvider';
 import { useUserStore } from '@/shared/stores/UserStore/UserStoreProvider';
 import { CarismaLogo } from '@/shared/assets/CarismaLogo';
 
-export const BurgerNavbar = () => {
+interface BurgerNavbarProps {
+  children?: ReactNode;
+}
+
+export const BurgerNavbar: FC<BurgerNavbarProps> = ({ children }) => {
   const [showBurgerMenu, setShowBurgerMenu] = useState(false)
 
   const { switchCart } = useCartStore(state => state);
@@ -63,6 +67,8 @@ export const BurgerNavbar = () => {
           <div></div>
         </div>
       }
+
+      {children}
     </div>
   );
 };

@@ -2,222 +2,203 @@
 
 import s from './Catalog.module.css';
 
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { mockSpareParts } from '@/shared/data/sparePartsMock';
+import { TextEffectOne, TextEffectThree } from 'react-text-animate';
+import { Reveal } from '@/shared/ui/Reveal';
+import { CategoryCard } from '@/components/CategoryCard/CategoryCard';
+import { categoriesDict } from '@/shared/data/partCategories';
+import { SparePartCard } from '@/components/SparePartCard/SparePartCard';
+import { SearchingForm } from '../SearchingForm';
+import { usePathname, useRouter } from 'next/navigation';
+import { categoriesOptions, generationOptions, makeOptions, modelOptions } from '@/shared/data/filtersOptions';
 import { CatalogFilters } from '@/components/CatalogFilters';
-import { ProductsList } from '@/blocks/ProductsList';
-import { apiUrlBuilder } from '@/shared/utils/urlBuilder';
-import { Suspense, useEffect, useState } from 'react';
-import { IProduct } from '@/shared/types/Product';
-import { CategoryCard } from '@/components/CategoryCard';
-import { ICategory } from '@/shared/types/Category';
-import { ICarSearchParams } from '@/shared/types/Car';
-import { getFullCarName } from '@/shared/utils/carDataUtils';
-import { carMockData } from '@/shared/data/carMockData';
+import { ArrowIcon } from '@/shared/assets';
+import { BurgerNavbar } from '@/components/BurgerNavbar';
+import { StickyNavbar } from '@/components/StickyNavbar';
 
-interface CatalogProps {
-  searchParams?: ICarSearchParams;
+export type TFilters = {
+  make?: string
+  model?: string
+  generation?: string
+  category?: string
+  oemNumber?: string
 }
 
-export const Catalog = ({ searchParams }: CatalogProps) => {
-  const [isMobile, setIsMobile] = useState(false);
+export const Catalog = () => {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
 
-  const [products, setProducts] = useState<IProduct[]>();
-  const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(null);
-  const [selectedSubCategory, setSelectedSubCategory] = useState<ICategory | null>(null);
+  const filtersQuery = searchParams.get('filters')
 
-  const [category, setCategory] = useState<ICategory | null>(null);
-  const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
-  const [searchResults, setSearchResults] = useState<IProduct[]>([]);
-  const [isSearchMode, setIsSearchMode] = useState(false);
-
-  useEffect(() => {
-    if (window !== undefined) {
-      setIsMobile(window?.innerWidth <= 768);
-    }
-  }, []);
-
-  // Обработка параметров поиска
-  useEffect(() => {
-    if (searchParams && (searchParams.make || searchParams.model || searchParams.body || searchParams.engine || searchParams.oem)) {
-      setIsSearchMode(true);
-
-      // Получаем полное название автомобиля
-      const carName = searchParams.make && searchParams.model && searchParams.body && searchParams.engine
-        ? getFullCarName(carMockData, searchParams.make, searchParams.model, searchParams.body, searchParams.engine)
-        : 'BMW Vehicle';
-
-      // Моковые результаты поиска
-      const mockSearchResults: IProduct[] = [
-        {
-          id: 1,
-          name: `${carName} - Brake Pad Set`,
-          description: 'High quality brake pads for BMW vehicles',
-          link: '/product/1',
-          price: 89.99,
-          brightness: 0,
-          old_price: 0,
-          categoryId: 1,
-          about: 'High quality brake pads for BMW vehicles',
-          recipe: {},
-          additionalFields: { oemNumber: searchParams.oem || '11427512345' },
-          weight: 2.5,
-          variation: [],
-          processing: [],
-          fermentation: [],
-          region: '',
-          farmer: '',
-          keyDescriptor: '',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          images: []
-        },
-        {
-          id: 2,
-          name: `${carName} - Oil Filter`,
-          description: 'Genuine BMW oil filter',
-          link: '/product/2',
-          price: 24.99,
-          brightness: 0,
-          old_price: 0,
-          categoryId: 2,
-          about: 'Genuine BMW oil filter',
-          recipe: {},
-          additionalFields: { oemNumber: '11427512346' },
-          weight: 0.5,
-          variation: [],
-          processing: [],
-          fermentation: [],
-          region: '',
-          farmer: '',
-          keyDescriptor: '',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          images: []
-        },
-        {
-          id: 3,
-          name: `${carName} - Air Filter`,
-          description: 'High performance air filter',
-          link: '/product/3',
-          price: 34.99,
-          brightness: 0,
-          old_price: 0,
-          categoryId: 3,
-          about: 'High performance air filter',
-          recipe: {},
-          additionalFields: { oemNumber: '11427512347' },
-          weight: 0.8,
-          variation: [],
-          processing: [],
-          fermentation: [],
-          region: '',
-          farmer: '',
-          keyDescriptor: '',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          images: []
-        }
-      ];
-      setSearchResults(mockSearchResults);
-    } else {
-      setIsSearchMode(false);
-      setSearchResults([]);
-    }
-  }, [searchParams]);
-
-  async function getProducts() {
-    const regionsParam = encodeURIComponent(JSON.stringify(selectedRegions));
-    const url = `/product?categoryId=${category?.id || ''}&regions=${regionsParam}`;
+  const safeParseFilters = (value: string | null): TFilters => {
+    if (!value) return {}
     try {
-      const res = await fetch(apiUrlBuilder(url));
-      const data = await res.json();
-      setProducts(data?.rows || []);
-    } catch (error) {
-      console.log(error);
+      const parsed = JSON.parse(value)
+      if (parsed && typeof parsed === 'object') return parsed
+      return {}
+    } catch (_) {
+      return {}
     }
   }
 
-  const mergeCategories = (
-    selectedSubCategory: ICategory | null,
-    selectedCategory: ICategory | null,
-  ) => {
-    if (selectedSubCategory?.id) {
-      setCategory(selectedSubCategory);
-      return;
+  const [filters, setFilters] = useState<TFilters>(() => safeParseFilters(filtersQuery))
+
+  const [items, setItems] = useState(mockSpareParts)
+  const [filteredItems, setFilteredItems] = useState(mockSpareParts)
+
+  // Sync URL when filters change
+  useEffect(() => {
+    const next = new URLSearchParams(searchParams.toString())
+    if (filters && Object.keys(filters).length > 0) {
+      next.set('filters', encodeURIComponent(JSON.stringify(filters)))
+    } else {
+      next.delete('filters')
     }
-    if (selectedCategory?.id) {
-      setCategory(selectedCategory);
-      return;
+    router.replace(`${pathname}?${next.toString()}`, { scroll: true })
+  }, [filters])
+
+  // Parse filters from URL when it changes (e.g., back/forward navigation)
+  useEffect(() => {
+    const parsed = safeParseFilters(filtersQuery ? decodeURIComponent(filtersQuery) : null)
+    setFilters(prev => ({ ...prev, ...parsed }))
+  }, [filtersQuery])
+
+  // Apply filters to items
+  useEffect(() => {
+    const apply = () => {
+      const next: Partial<typeof mockSpareParts> = {}
+
+      const categoryFilter = filters?.category
+
+      const categories = categoryFilter ? [categoryFilter] : Object.keys(items)
+
+      categories.forEach((categoryKey) => {
+        const list = (items as any)[categoryKey] || []
+
+        const filteredList = list.filter((part: any) => {
+          // Basic category match already selected by categoryKey
+          // Make/Model/Generation: mock data contains only BMW 3-series; keep predicates for future data
+          const makeOk = filters?.make ? true : true
+          const modelOk = filters?.model ? true : true
+          const generationOk = filters?.generation ? true : true
+          return makeOk && modelOk && generationOk
+        })
+
+        if (filteredList.length) {
+          (next as any)[categoryKey] = filteredList
+        }
+      })
+
+      setFilteredItems(next as any)
     }
-    setCategory(null);
+
+    apply()
+  }, [filters, items])
+
+
+  const [showStickyFilters, setShowStickyFilters] = useState(false)
+
+  const controlNavbar = () => {
+    const breakproint = window.innerWidth > 745 ? 115 : 65
+    setShowStickyFilters(window.scrollY > breakproint);
   };
 
   useEffect(() => {
-    mergeCategories(selectedSubCategory, selectedCategory);
-  }, [selectedSubCategory, selectedCategory]);
+    window.addEventListener('scroll', controlNavbar);
+    return () => {
+      window.removeEventListener('scroll', controlNavbar);
+    };
+  }, []);
 
-  useEffect(() => {
-    getProducts();
-  }, [category?.id, selectedRegions]);
+  const [expandFilters, setExpandFilters] = useState(true)
 
   return (
-    <div className={s.catalogBlockWrapper}>
-      <div className={s.categoryWrapper}>
-        {isSearchMode ? (
-          <div className={s.searchHeader}>
-            <h2>Search Results</h2>
-            <p>
-              {searchParams?.make && `Make: ${searchParams.make.toUpperCase()}`}
-              {searchParams?.model && ` | Model: ${searchParams.model}`}
-              {searchParams?.body && ` | Body: ${searchParams.body}`}
-              {searchParams?.engine && ` | Engine: ${searchParams.engine}`}
-              {searchParams?.oem && ` | OEM: ${searchParams.oem}`}
-            </p>
+    <>
+      <BurgerNavbar>
+        {showStickyFilters &&
+          <div className={s.stickyFilters}>
+
+            <div className={`${s.filtersWrapper} ${expandFilters ? s.expandedFilters : ''}`}>
+              <CatalogFilters filters={filters} setFilters={setFilters} />
+            </div>
+
+            <div className={s.expandFiltersButton} onClick={() => setExpandFilters(prev => !prev)}>
+              <ArrowIcon style={{ transform: `rotate(${expandFilters ? '270' : '90'}deg)` }} />
+            </div>
           </div>
-        ) : (
-          <>
-            {category && !isMobile && <CategoryCard category={category} noButton />}
-            {!category && !isMobile && (
-              <CategoryCard
-                category={
-                  {
-                    imageUrl: '/categorybg.jpeg',
-                    name: 'Кофейные лоты, спешалти кофе, чай',
-                  } as ICategory
-                }
-                hardcodeImage
-                noButton
-              />
-            )}
-          </>
-        )}
-      </div>
-      <div className={s.catalog_wrapper}>
-        {!isSearchMode && (
-          <Suspense>
-            <CatalogFilters
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-              selectedSubCategory={selectedSubCategory}
-              setSelectedSubCategory={setSelectedSubCategory}
-              selectedRegions={selectedRegions}
-              setSelectedRegions={setSelectedRegions}
-            />
-          </Suspense>
-        )}
-        <div className={s.products}>
-          {isSearchMode ? (
-            searchResults && searchResults.length > 0 ? (
-              <ProductsList products={searchResults} />
-            ) : (
-              <div className={s.noResults}>
-                <p>No spare parts found for the selected criteria.</p>
-              </div>
-            )
-          ) : (
-            products && !!products?.length && <ProductsList products={products} />
-          )}
+        }
+      </BurgerNavbar>
+
+      <StickyNavbar alwaysShow>
+        {showStickyFilters &&
+          <div className={s.stickyFilters}>
+
+            <div className={`${s.filtersWrapper} ${expandFilters ? s.expandedFilters : ''}`}>
+              <CatalogFilters filters={filters} setFilters={setFilters} />
+            </div>
+
+            <div className={s.expandFiltersButton} onClick={() => setExpandFilters(prev => !prev)}>
+              <ArrowIcon style={{ transform: `rotate(${expandFilters ? '270' : '90'}deg)` }} />
+            </div>
+          </div>
+        }
+      </StickyNavbar>
+
+
+      <section className={s.section}>
+
+        <div className={s.catalogHeader}>
+
+          <div className={s.catalogTitle}>
+            <TextEffectOne className={s.title} staggerDuration={0.02} animateOnce={false} text="ALL SPARE PARTS" />
+            <TextEffectOne className={s.titleCount} staggerDuration={0.02} animateOnce={false} text="1728" />
+          </div>
+          {!showStickyFilters &&
+            <div className={s.filters}>
+              <CatalogFilters filters={filters} setFilters={setFilters} />
+            </div>
+          }
         </div>
-      </div>
-    </div>
+
+
+        <div className={s.container}>
+          {Object.entries(filteredItems)?.map(([category, parts], index) => {
+            const categoryData = categoriesDict?.[category as keyof typeof categoriesDict] || null
+
+            if (!categoryData || !parts?.length) return null
+
+            return (
+              <>
+                {index === 2 &&
+                  <Reveal delay={index * 0.1} >
+                    <SearchingForm title={<span>Please let us know, which part<br />you need for your vehicle?</span>} />
+                  </Reveal>
+                }
+
+                <div className={s.grid} key={category}>
+                  <Reveal delay={index * 0.1} height='100%'>
+                    <CategoryCard
+                      title={categoryData.title}
+                      description={categoryData.description}
+                      icon={categoryData.icon}
+                    />
+                  </Reveal>
+
+                  {parts?.map((part, partIndex) =>
+                    <Reveal key={part?.id} delay={partIndex * 0.1}>
+                      <SparePartCard {...part} href={`#`} />
+                    </Reveal>
+                  )}
+                </div>
+              </>
+            )
+          })}
+
+        </div>
+      </section >
+    </>
   );
 };

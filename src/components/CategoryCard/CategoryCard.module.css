@@ -12,6 +12,7 @@
   overflow: hidden;
   border: none;
   text-align: left;
+  height: 100%;
 }
 
 .card:hover {
