@@ -3,7 +3,7 @@
 import s from './Catalog.module.css';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { mockSpareParts } from '@/shared/data/sparePartsMock';
 import { TextEffectOne, TextEffectThree } from 'react-text-animate';
 import { Reveal } from '@/shared/ui/Reveal';
@@ -26,7 +26,7 @@ export type TFilters = {
   oemNumber?: string
 }
 
-export const Catalog = () => {
+const CatalogComponent = () => {
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -202,3 +202,11 @@ export const Catalog = () => {
     </>
   );
 };
+
+export function Catalog() {
+  return (
+    <Suspense>
+      <CatalogComponent />
+    </Suspense>
+  );
+}
