@@ -11,14 +11,14 @@ interface SparePartCardProps extends ISparePart {
 }
 
 export const SparePartCard: React.FC<SparePartCardProps> = ({
-    id, name, category, oemNumber, alternativeName, replaces, description, tags, car, image, priceDollars, priceCents, href
+    id, name, category, oemNumber, alternativeName, replaces, description, tags, car, images, priceDollars, priceCents, href
 }) => {
     return (
         <a href={href} className={s.card}>
             <div className={s.cardContent}>
                 <div className={s.imageWrapper}>
                     <Image
-                        src={image}
+                        src={images?.[0].imageUrl}
                         alt={name}
                         width={200}
                         height={120}

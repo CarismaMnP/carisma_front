@@ -1,4 +1,5 @@
 import { ICarData } from "./Car";
+import { IImage } from "./Image";
 
 export interface ISparePart {
     id: string;
@@ -10,7 +11,7 @@ export interface ISparePart {
     description: string;
     tags: string[];
     car: ICarData;
-    image: string;
+    images: IImage[];
     priceDollars: string | number;
     priceCents: string | number;
 }

@@ -43,7 +43,7 @@ export const mockSpareParts = {
             car: carMockData,
             priceDollars: 125,
             priceCents: 45,
-            image: '/drip.png',
+            images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
         },
         {
             id: 'eng-002',
@@ -57,7 +57,7 @@ export const mockSpareParts = {
             car: carMockData,
             priceDollars: 125,
             priceCents: 45,
-            image: '/drip.png',
+            images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
         }
     ] as ISparePart[],
 
@@ -74,7 +74,7 @@ export const mockSpareParts = {
             car: carMockData,
             priceDollars: 125,
             priceCents: 45,
-            image: '/drip.png',
+            images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
         },
         {
             id: 'trans-002',
@@ -88,7 +88,7 @@ export const mockSpareParts = {
             car: carMockData,
             priceDollars: 125,
             priceCents: 45,
-            image: '/drip.png',
+            images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
         }
     ] as ISparePart[],
 
@@ -105,7 +105,7 @@ export const mockSpareParts = {
             car: carMockData,
             priceDollars: 125,
             priceCents: 45,
-            image: '/drip.png',
+            images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
         },
         {
             id: 'susp-002',
@@ -119,7 +119,7 @@ export const mockSpareParts = {
             car: carMockData,
             priceDollars: 125,
             priceCents: 45,
-            image: '/drip.png',
+            images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
         }
     ] as ISparePart[],
 
@@ -136,7 +136,7 @@ export const mockSpareParts = {
             car: carMockData,
             priceDollars: 125,
             priceCents: 45,
-            image: '/drip.png',
+            images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
         }
     ] as ISparePart[],
 
@@ -153,7 +153,7 @@ export const mockSpareParts = {
             car: carMockData,
             priceDollars: 125,
             priceCents: 45,
-            image: '/drip.png',
+            images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
         },
         {
             id: 'body-002',
@@ -167,7 +167,7 @@ export const mockSpareParts = {
             car: carMockData,
             priceDollars: 125,
             priceCents: 45,
-            image: '/drip.png',
+            images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
         }
     ] as ISparePart[],
 
@@ -184,7 +184,7 @@ export const mockSpareParts = {
             car: carMockData,
             priceDollars: 125,
             priceCents: 45,
-            image: '/drip.png',
+            images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
         },
         {
             id: 'int-002',
@@ -198,7 +198,7 @@ export const mockSpareParts = {
             car: carMockData,
             priceDollars: 125,
             priceCents: 45,
-            image: '/drip.png',
+            images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
         }
     ] as ISparePart[]
 };

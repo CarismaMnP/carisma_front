@@ -5,7 +5,7 @@ import s from './Catalog.module.css';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { mockSpareParts } from '@/shared/data/sparePartsMock';
-import { TextEffectOne, TextEffectThree } from 'react-text-animate';
+import { TextEffectOne } from 'react-text-animate';
 import { Reveal } from '@/shared/ui/Reveal';
 import { CategoryCard } from '@/components/CategoryCard/CategoryCard';
 import { categoriesDict } from '@/shared/data/partCategories';
@@ -189,7 +189,7 @@ const CatalogComponent = () => {
 
                   {parts?.map((part, partIndex) =>
                     <Reveal key={part?.id} delay={partIndex * 0.1}>
-                      <SparePartCard {...part} href={`#`} />
+                      <SparePartCard {...part} href={`/part/${part?.id}`} />
                     </Reveal>
                   )}
                 </div>

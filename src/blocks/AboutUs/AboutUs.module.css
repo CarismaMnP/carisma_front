@@ -151,6 +151,7 @@
     .statCard {
         padding: 2.2rem;
         height: 14rem;
+        gap: 0;
     }
 
     .statNumber {

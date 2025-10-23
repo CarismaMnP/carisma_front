@@ -5,4 +5,5 @@ export * from './VisaLogo';
 export * from './MastercardLogo';
 export * from './MirLogo';
 export * from './CartIcon';
+export * from './ZapIcon';
 export * from './PersonIcon';
