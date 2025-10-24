@@ -3,6 +3,7 @@
   width: 100%;
   flex-direction: column;
   gap: 0.8rem;
+  position: relative;
 }
 
 .title {
@@ -11,29 +12,33 @@
 
 .error {
   font-size: 1.6rem;
-  color: #e30c2c;
-}
-
-.required::after {
-  content: ' *';
-  color: #e30c2c;
-  font-size: 1.8rem;
-  font-weight: 500;
+  color: #FF0004;
+  opacity: 60%;
 }
 
 .titled_input {
-  font-size: 1.4rem;
-  font-weight: 600;
+  font-size: 1.8rem;
+  font-weight: 400;
   padding: 1.6rem;
-  border-radius: 0.8rem;
-  border: 0.1rem solid rgba(0, 0, 0, 0.4);
-  background: #F3F3F3;
+  background: #FFFFFF;
   -moz-appearance: textfield;
   appearance: textfield;
+  border: none;
 }
 
 .titled_input::-webkit-outer-spin-button,
 .titled_input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.required {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background: #FF0004;
+  border-radius: 50%;
+  opacity: 60%;
 }

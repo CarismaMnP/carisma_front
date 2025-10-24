@@ -1,94 +1,93 @@
 'use client';
-import { useEffect, useState, useMemo, useCallback, ChangeEvent } from 'react';
+import { useState, useCallback, ChangeEvent } from 'react';
 import Image from 'next/image';
-import axios from 'axios';
-import Fuse from 'fuse.js';
 
 import { useCartStore } from '@/shared/store/CartStoreProvider';
 import { useUserStore } from '@/shared/stores/UserStore/UserStoreProvider';
-import { apiUrlBuilder, imageUrlBuilder } from '@/shared/utils/urlBuilder';
 import { TitledInput } from '@/shared/ui/TitledInput';
 import s from './Order.module.css';
-import { normalizeCountForm } from '@/shared/utils/normalizeCountForm';
-import { CitySearch } from './citySearch';
 import { toast } from 'react-toastify';
+import { TextEffectOne } from 'react-text-animate';
+import { Reveal } from '@/shared/ui/Reveal';
+import { ICart } from '@/shared/store/store';
+import { carMockData } from '@/shared/data/carMockData';
+import { MapIcon } from '@/shared/assets/MapIcon';
 
-interface ICDEKCity {
-  full_name: string;
-  code: number;
-}
-
-interface ICDEKOffice {
-  name: string;
-  code: string;
-}
-
-interface IBOXBERRYOffice {
-  Name: string;
-  Code: string;
-}
-
-interface IDelivery {
-  name: string;
-  days?: number;
-  price?: number;
-  addressRequired: boolean;
-  cdekId?: number;
-  cdekOfficeRequired: boolean;
-  comment?: string;
-  boxberryOfficeRequired: boolean;
-}
+type DeliveryVariants = 'upsDelivery' | 'selfPickup'
 
 interface IForm {
   name: string;
   mail: string;
+  country: string;
   city: string;
-  cityId: number | undefined;
-  boxberryCityId: number | undefined;
-  selectedDelivery: IDelivery | undefined;
-  officeName: string;
-  boxberryOfficeName: string;
-  officeId: string;
-  boxberryOfficeId: string;
-  address: string;
-  flat: string;
-  building: string;
-  floor: string;
-  intercom: string;
-  comment: string;
+  zipCode: string;
+  state: string;
+  addressLine1: string;
+  addressLine2: string;
+  deliveryInstructions: string;
+  variant: DeliveryVariants,
 }
 
-const FAUNO_OPTIONS: IDelivery[] = [
+const cartMock: ICart[] = [
   {
-    name: 'Курьером по Москве (центр)',
-    days: 1,
-    price: 450,
-    addressRequired: true,
-    cdekOfficeRequired: false,
-    boxberryOfficeRequired: false
+    id: 1,
+    count: 4,
+    partId: 'part1',
+    part: {
+      id: 'eng-002',
+      name: 'High Pressure Fuel Pump',
+      category: 'engine',
+      oemNumber: '11427512346',
+      alternativeName: 'BMW N47 HPFP',
+      replaces: ['11427512347'],
+      description: 'High pressure fuel pump for N47 diesel engines',
+      tags: ['hpfp', 'pump', 'diesel', 'n47'],
+      car: carMockData,
+      priceDollars: 125,
+      priceCents: 45,
+      images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
+    },
   },
   {
-    name: 'Доставка курьером (в пределах МКАД)',
-    days: 1,
-    price: 500,
-    addressRequired: true,
-    cdekOfficeRequired: false,
-    boxberryOfficeRequired: false
+    id: 2,
+    count: 1,
+    partId: 'part1',
+    part: {
+      id: 'eng-001',
+      name: 'Turbocharger N20',
+      category: 'engine',
+      oemNumber: '11427512345',
+      alternativeName: 'BMW N20 Turbo',
+      replaces: ['11427512344', '11427512343'],
+      description: 'Turbocharger for N20 series engines, 2.0L gasoline',
+      tags: ['turbocharger', 'turbo', 'n20', '2.0l'],
+      car: carMockData,
+      priceDollars: 125,
+      priceCents: 45,
+      images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
+    },
   },
   {
-    name: 'Самовывоз из кофейни fauno (ул. Самокатная 3, стр.13)',
-    addressRequired: false,
-    cdekOfficeRequired: false,
-    boxberryOfficeRequired: false
-  },
-  {
-    name: 'Доставка курьером Яндекс, день в день',
-    price: 1200,
-    addressRequired: true,
-    cdekOfficeRequired: false,
-    boxberryOfficeRequired: false
-  },
-];
+    id: 3,
+    count: 2,
+    partId: 'part1',
+    part: {
+      id: 'susp-001',
+      name: 'Front Shock Absorber',
+      category: 'suspension',
+      oemNumber: '31317512345',
+      alternativeName: 'Strut Assembly',
+      replaces: ['31317512346', '31317512347'],
+      description: 'Front shock absorber with spring assembly',
+      tags: ['shock', 'absorber', 'strut', 'suspension'],
+      car: carMockData,
+      priceDollars: 125,
+      priceCents: 45,
+      images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
+    },
+  }
+]
+
 
 export const Order = () => {
   const { cart } = useCartStore(state => state);
@@ -98,121 +97,48 @@ export const Order = () => {
   const [form, setForm] = useState<IForm>({
     name: user.name || '',
     mail: user.mail || '',
+    variant: 'upsDelivery',
+    country: '',
     city: '',
-    boxberryCityId: undefined,
-    cityId: undefined,
-    selectedDelivery: undefined,
-    boxberryOfficeId: '',
-    officeName: '',
-    boxberryOfficeName: '',
-    officeId: '',
-    address: '',
-    flat: '',
-    building: '',
-    floor: '',
-    intercom: '',
-    comment: '',
+    zipCode: '',
+    state: '',
+    addressLine1: '',
+    addressLine2: '',
+    deliveryInstructions: '',
   });
 
-  // Synchronized user defaults
-  useEffect(() => {
-    setForm(f => ({ ...f, name: user.name || '', mail: user.mail || '' }));
-  }, [user.name, user.mail]);
+  // useEffect(() => {
+  //   setForm(f => ({ ...f, name: user.name || '', mail: user.mail || '' }));
+  // }, [user.name, user.mail]);
 
   // Cart totals
-  const cartTotal = useMemo(
-    () => cart.reduce((sum, { product, count }) => sum + product.price * count, 0),
-    [cart],
-  );
-  const userTotal = useMemo(() => {
-    let base =
-      user.discount && user.discount > 0 ? cartTotal * (1 - user.discount / 100) : cartTotal;
+  // const cartTotal = useMemo(
+  //   () => cart.reduce((sum, { product, count }) => sum + product.price * count, 0),
+  //   [cart],
+  // );
 
-    if (form.selectedDelivery) {
-      base += form.selectedDelivery.price || 0;
-    }
+  // const userTotal = useMemo(() => {
+  //   let base =
+  //     user.discount && user.discount > 0 ? cartTotal * (1 - user.discount / 100) : cartTotal;
 
-    return base;
-  }, [cartTotal, user.discount, form.selectedDelivery]);
+  //   if (form.selectedDelivery) {
+  //     base += form.selectedDelivery.price || 0;
+  //   }
 
-  // City search
-  const [cityOptions, setCityOptions] = useState<ICDEKCity[]>([]);
-
-  // CDEK data
-  const [offices, setOffices] = useState([]);
-  const [boxberryOffices, setBoxberryOffices] = useState([]);
-  const [deliveryOptions, setDeliveryOptions] = useState<IDelivery[]>([]);
-
-  useEffect(() => {
-    const loadCdek = async () => {
-      if (!form.cityId) return;
-
-      // Fetch offices
-      const officeRes = await fetch(apiUrlBuilder(`/order/office?cityCode=${form.cityId}&cityName=${form.city.split(',')[0]}`));
-      const responce = await officeRes.json()
-      setOffices(responce['offecies']);
-      setBoxberryOffices(responce['boxberryOffices']);
-      setForm(f => ({ ...f, boxberryCityId: responce['boxberryCityId'] }));
+  //   return base;
+  // }, [cartTotal, user.discount, form.selectedDelivery]);
 
 
-      // Fetch tariffs
-      const weight = cart.reduce((sum, { product, count }) => sum + product.weight * count, 0);
-      const tariffRes = await fetch(
-        apiUrlBuilder(`/order/tariffs?cityCode=${form.cityId}&boxberryCityId=${responce['boxberryCityId']}&weight=${weight}`),
-      );
 
-      const data = await tariffRes.json();
-      const options = [...data, ...(form.cityId === 44 ? FAUNO_OPTIONS : [])];
-
-      setDeliveryOptions(options);
-    };
-    loadCdek();
-  }, [form.cityId, cart]);
-
-  // Office search
-  const [officeOptions, setOfficeOptions] = useState<ICDEKOffice[]>([]);
-  const searchOffice = useCallback(
-    (str: string) => {
-      setForm(f => ({ ...f, officeName: str }));
-      if (!str) return setOfficeOptions([]);
-      const fuse = new Fuse(offices, { keys: ['name'], threshold: 0.4 });
-      setOfficeOptions(fuse.search(str).map(r => r.item));
-    },
-    [offices],
-  );
-  
-  const [boxberryOfficeOptions, setBoxberryOfficeOptions] = useState<IBOXBERRYOffice[]>([]);
-  const searchBoxberryOffice = useCallback(
-    (str: string) => {
-      setForm(f => ({ ...f, boxberryOfficeName: str }));
-      if (!str) return setBoxberryOfficeOptions([]);
-      const fuse = new Fuse(boxberryOffices, { keys: ['Address'], threshold: 0.4 });
-      setBoxberryOfficeOptions(fuse.search(str).map(r => r.item));
-    },
-    [offices],
-  );
-  
-  
   // Handlers
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm(f => ({ ...f, [name]: value }));
   }, []);
 
-  const handleSelectCity = (option: ICDEKCity) => {
-    setForm(f => ({ ...f, city: option.full_name, cityId: option.code }));
-    setCityOptions([]);
-  };
-
-  const handleSelectOffice = (option: ICDEKOffice) => {
-    setForm(f => ({ ...f, officeName: option.name, officeId: option.code }));
-    setOfficeOptions([]);
-  };
-
-  const handleSelectBoxberryOffice = (option: IBOXBERRYOffice) => {
-    setForm(f => ({ ...f, boxberryOfficeName: option.Name, boxberryOfficeId: option.Code }));
-    setBoxberryOfficeOptions([]);
-  };
+  const handleChangeDeliveryVariant = (variant: DeliveryVariants) => {
+    setForm(f => ({ ...f, variant }));
+  }
 
   // Payment
   const handlePay = async () => {
@@ -224,306 +150,169 @@ export const Order = () => {
       return toast.error('Введите город');
     }
 
-    if (!form.cityId) {
-      return toast.error('Выберите город из списка');
-    }
+    console.log('SUCCESS', form);
 
-    if (!form.selectedDelivery) {
-      return toast.error('Выберите способ доставки');
-    }
-
-    if (form.selectedDelivery.cdekOfficeRequired && !form.officeId) {
-      return toast.error('Выберите пункт выдачи CDEK');
-    }
-    
-    if (form.selectedDelivery.boxberryOfficeRequired && !form.boxberryOfficeId) {
-      return toast.error('Выберите пункт выдачи CDEK');
-    }
-
-    if (form.selectedDelivery.addressRequired) {
-      if (!form.address) {
-        return toast.error('Укажите адрес доставки');
-      }
-    }
-
-    const { data } = await axios.post(apiUrlBuilder('/order'), {
-      ...form,
-      userId: user.id,
-      phone: user.phone,
-      products: cart.map(p => ({
-        productId: p.product.id,
-        count: p.count,
-        selectorValue: p.selectorValue,
-      })),
-    });
-
-    const { invoiceId, amount, currency } = data;
-    const widget = new (window as any).cp.CloudPayments();
-    widget.pay(
-      'charge',
-      {
-        // publicId: process.env.NEXT_PUBLIC_CP_PUBLIC_ID,
-        description: `Заказ №${invoiceId}`,
-        amount,
-        currency,
-        invoiceId,
-        accountId: user.id,
-        data: { orderId: invoiceId },
-      },
-      {
-        onSuccess: () => {
-          window.location.href = '/profile';
-        },
-        onComplete: (res: string) => console.log('Платёж завершён:', res),
-      },
-    );
   };
 
   return (
     <div className={s.blockWrapper}>
-      <p className={s.title}>Оформление заказа</p>
+
+      <TextEffectOne className={s.orderTitle} staggerDuration={0.02} animateOnce={false} text="CHECKOUT" />
       <div className={s.order_wrapper}>
+
         <div className={s.orderInfo}>
-          {/* Контакты */}
+
           <div className={s.fieldsList}>
-            <TitledInput
-              title='ФИО'
-              required
-              name='name'
-              value={form.name}
-              onChange={handleChange}
-            />
+            <TextEffectOne className={s.fieldsBlockTitle} staggerDuration={0.02} animateOnce={false} text="Your Information" />
+
             <div className={s.fieldsRow}>
-              <TitledInput title='Телефон' required disabled value={user.phone} />
               <TitledInput
-                title='Почта'
+                placeholder='Full name...'
+                required
+                name='name'
+                value={form.name}
+                onChange={handleChange}
+                type='text'
+              />
+              <TitledInput
+                placeholder='Email address...'
                 required
                 name='mail'
+                type='email'
                 value={form.mail}
                 onChange={handleChange}
               />
             </div>
-          </div>
-          {/* Город */}
-          <div className={s.cityInput}>
-            <CitySearch
-              city={form.city}
-              cityId={form.cityId}
-              setCityOptions={setCityOptions}
-              setForm={setForm}
-            />
-            {cityOptions.length > 0 && (
-              <div className={s.search_results}>
-                <div className={s.outside_click_handler} onClick={() => setCityOptions([])} />
-                {cityOptions.map(o => (
-                  <div key={o.code} className={s.search_result} onClick={() => handleSelectCity(o)}>
-                    <p className={s.search_name}>{o.full_name.split(',').slice(0, 2).join(',')}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          {/* Способы доставки */}
-          {deliveryOptions.length > 0 && (
-            <div className={s.deliveryList}>
-              <p className={s.deliveryType}>Выберите способ доставки</p>
-              {deliveryOptions.map(opt => (
-                <div
-                  key={opt.name}
-                  className={`${s.delivery} ${opt.name === form.selectedDelivery?.name ? s.selected : ''}`}
-                  onClick={() => setForm(f => ({ ...f, selectedDelivery: opt }))}
-                >
-                  {opt.name}
-                  {opt.days
-                    ? `, от ${opt.days} ${normalizeCountForm(opt.days, ['дня', 'дней', 'дней'])}`
-                    : ''}
-                  {opt.price ? `, ${opt.price} ₽` : ''}
-                  {opt.comment ? `, ${opt.comment}` : ''}
-                </div>
-              ))}
+
+            <div className={s.fieldsRowSelect}>
+              <div
+                className={`${s.selectItem} ${form?.variant === 'upsDelivery' ? s.deliverySelected : ''}`}
+                onClick={() => handleChangeDeliveryVariant('upsDelivery')}
+              >UPS Delivery</div>
+
+              <div
+                className={`${s.selectItem} ${form?.variant === 'selfPickup' ? s.deliverySelected : ''}`}
+                onClick={() => handleChangeDeliveryVariant('selfPickup')}
+              >Self-pickup</div>
             </div>
-          )}
-          {/* Адрес или пункт выдачи */}
-          {form.selectedDelivery?.addressRequired && (
-            <>
-              <TitledInput
-                title='Адрес (улица, дом)'
-                required
-                name='address'
-                value={form.address}
-                onChange={handleChange}
-              />
-              <TitledInput title='Кв./офис' name='flat' value={form.flat} onChange={handleChange} />
+          </div>
+
+          {form.variant === 'upsDelivery' && <Reveal delay={0.1}>
+            <div className={s.fieldsList}>
+              <TextEffectOne className={s.fieldsBlockTitle} staggerDuration={0.02} animateOnce={false} text="Shipping Information" />
+
               <div className={s.fieldsRow}>
                 <TitledInput
-                  title='Подъезд'
-                  name='building'
-                  value={form.building}
+                  placeholder='Country'
+                  required
+                  name='country'
+                  value={form.country}
                   onChange={handleChange}
+                  type='text'
                 />
-                <TitledInput title='Этаж' name='floor' value={form.floor} onChange={handleChange} />
                 <TitledInput
-                  title='Домофон'
-                  name='intercom'
-                  value={form.intercom}
+                  placeholder='City'
+                  required
+                  name='city'
+                  value={form.city}
                   onChange={handleChange}
+                  type='text'
                 />
               </div>
-            </>
-          )}
-          {form.selectedDelivery?.cdekOfficeRequired && (
-            <div className={s.cityInput}>
-              <TitledInput
-                autoComplete='none'
-                required
-                onFocus={e => e.target.setAttribute('autoComplete', 'none')}
-                title='Пункт выдачи CDEK'
-                name='officeName'
-                value={form.officeName}
-                onChange={(e: any) => searchOffice(e.target.value)}
-              />
-              {officeOptions.length > 0 && (
-                <div className={s.search_results}>
-                  <div className={s.outside_click_handler} onClick={() => setOfficeOptions([])} />
-                  {officeOptions.map(o => (
-                    <div
-                      key={o.code}
-                      className={s.search_result}
-                      onClick={() => handleSelectOffice(o)}
-                    >
-                      <p className={s.search_name}>{o.name}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-          {form.selectedDelivery?.boxberryOfficeRequired && (
-            <div className={s.cityInput}>
-              <TitledInput
-                autoComplete='none'
-                required
-                onFocus={e => e.target.setAttribute('autoComplete', 'none')}
-                title='Пункт выдачи Boxberry'
-                name='boxberryOfficeName'
-                value={form.boxberryOfficeName}
-                onChange={(e: any) => searchBoxberryOffice(e.target.value)}
-              />
-              {boxberryOfficeOptions.length > 0 && (
-                <div className={s.search_results}>
-                  <div className={s.outside_click_handler} onClick={() => setBoxberryOfficeOptions([])} />
-                  {boxberryOfficeOptions.map(o => (
-                    <div
-                      key={o.Code}
-                      className={s.search_result}
-                      onClick={() => handleSelectBoxberryOffice(o)}
-                    >
-                      <p className={s.search_name}>{o.Name}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-          {/* Комментарий */}
-          <TitledInput
-            title='Комментарий'
-            name='comment'
-            value={form.comment}
-            onChange={handleChange}
-          />
-          {/* Суммы */}
-          <div className={s.mobileDetailsInfoList}>
-            <div className={s.detailsRow}>
-              <p className={s.detailsRowTitle}>Сумма товаров</p>
-              <p className={s.detailsRowValue}>{cartTotal.toLocaleString('ru-RU')} ₽</p>
-            </div>
-            {user.discount && user.discount > 0 ? (
-              <div className={s.detailsRow}>
-                <p className={s.detailsRowTitle}>Скидка {user.discount}%</p>
-                <p className={s.detailsRowValue}>
-                  {(cartTotal * (user.discount / 100)).toLocaleString('ru-RU')} ₽
-                </p>
+
+              <div className={s.fieldsRow}>
+                <TitledInput
+                  placeholder='ZIP Code'
+                  required
+                  name='zipCode'
+                  value={form.zipCode}
+                  onChange={handleChange}
+                  type='text'
+                />
+                <TitledInput
+                  placeholder='State'
+                  required
+                  name='state'
+                  value={form.state}
+                  onChange={handleChange}
+                  type='text'
+                />
               </div>
-            ) : (
-              <></>
-            )}
-            {form.selectedDelivery && (
-              <div className={s.detailsRow}>
-                <p className={s.detailsRowTitle}>Доставка</p>
-                <p className={s.detailsRowValue}>{form.selectedDelivery.price || 0} ₽</p>
+
+              <div className={s.fieldsRow}>
+                <TitledInput
+                  placeholder='Address line 1'
+                  required
+                  name='addressLine1'
+                  value={form.addressLine1}
+                  onChange={handleChange}
+                  type='text'
+                />
+                <TitledInput
+                  placeholder='Address line 2'
+                  name='addressLine2'
+                  value={form.addressLine2}
+                  onChange={handleChange}
+                  type='text'
+                />
               </div>
-            )}
-          </div>
-          <div className={s.mobileDetailsInfoList}>
-            <div className={s.detailsRow}>
-              <p className={s.detailsRowTitle}>Итого</p>
-              <p className={s.detailsRowValue}>{userTotal.toLocaleString('ru-RU')} ₽</p>
+
+              <div className={s.fieldsRow}>
+                <TitledInput
+                  placeholder='Delivery instructions'
+                  name='deliveryInstructions'
+                  value={form.deliveryInstructions}
+                  onChange={handleChange}
+                  type='text'
+                />
+              </div>
             </div>
-          </div>
-          <button className={s.pay} onClick={handlePay}>
-            Оплатить — {userTotal.toLocaleString('ru-RU')} ₽
-          </button>
+          </Reveal>}
+
+          {form.variant === 'selfPickup' && <Reveal delay={0.1}>
+            <div className={s.fieldsList}>
+              <TextEffectOne className={s.fieldsBlockTitle} staggerDuration={0.02} animateOnce={false} text="OUR OFFICE" />
+
+              <a href='https://maps.app.goo.gl/M2GmXdDx1o8y4kBYA' className={s.contactItem} target='_blank'>
+                <MapIcon />
+                <span className={s.address}>1300 W Beaver Street Jacksonville, FL 32209</span>
+              </a>
+            </div>
+          </Reveal>}
+
+          <button className={s.submitButton}>Place an order</button>
         </div>
 
         {/* Детали корзины */}
         <div className={s.orderDetails}>
           <div className={s.cartItemsList}>
-            {cart.map(item => (
-              <article key={item.id} className={s.cartItem}>
-                <div className={s.imageInfo}>
-                  <div className={s.imageWrapper}>
-                    <Image
-                      src={imageUrlBuilder(item.product.images[0].imageUrl)}
-                      alt={item.product.name}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                    />
-                  </div>
-                  <div className={s.itemInfo}>
-                    <p className={s.itemName}>{item.product.name}</p>
-                    <p className={s.itemPrice}>{item.product.price.toLocaleString('ru-RU')} ₽</p>
-                    {item?.product?.selector && item.selectorValue && (
+
+            {cartMock.map(item => (
+              <>
+                <article key={item.id} className={s.cartItem}>
+                  <div className={s.imageInfo}>
+                    <div className={s.imageWrapper}>
+                      <Image
+                        src={item?.part?.images[0].imageUrl}
+                        alt={item?.part?.name}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                      />
+                    </div>
+                    <div className={s.itemInfo}>
+                      <p className={s.itemName}>{item?.count}x {item?.part?.name}</p>
                       <p className={s.itemPrice}>
-                        {item.product?.selector?.name} - {item.selectorValue}
+                        ${item?.part?.priceDollars}.<span className={s.partInfoTitlePriceCents}>{item?.part?.priceCents}</span>
                       </p>
-                    )}
+                    </div>
                   </div>
-                </div>
-                <p className={s.itemPrice}>
-                  {item.count} x{' '}
-                  <span>{(item.product.price * item.count).toLocaleString('ru-RU')} ₽</span>
-                </p>
-              </article>
+                </article>
+
+                <div className={s.cartItemsDivider}></div>
+              </>
             ))}
-          </div>
-          <div className={s.detailsInfoList}>
-            <div className={s.detailsRow}>
-              <p className={s.detailsRowTitle}>Сумма товаров</p>
-              <p className={s.detailsRowValue}>{cartTotal.toLocaleString('ru-RU')} ₽</p>
-            </div>
-            {user.discount && user.discount > 0 ? (
-              <div className={s.detailsRow}>
-                <p className={s.detailsRowTitle}>Скидка {user.discount}%</p>
-                <p className={s.detailsRowValue}>
-                  -{(cartTotal * (user.discount / 100)).toLocaleString('ru-RU')} ₽
-                </p>
-              </div>
-            ) : (
-              <></>
-            )}
-            {form.selectedDelivery && (
-              <div className={s.detailsRow}>
-                <p className={s.detailsRowTitle}>Доставка</p>
-                <p className={s.detailsRowValue}>{form.selectedDelivery.price || 0} ₽</p>
-              </div>
-            )}
-          </div>
-          <div className={s.detailsInfoList}>
-            <div className={s.detailsRow}>
-              <p className={s.detailsRowTitle}>Итого</p>
-              <p className={s.detailsRowValue}>{userTotal.toLocaleString('ru-RU')} ₽</p>
-            </div>
+
+            <div className={s.totalPrice}>TOTAL:  ${'143'}.<span className={s.totalPriceCents}>{'45'}</span></div>
           </div>
         </div>
       </div>

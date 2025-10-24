@@ -33,8 +33,7 @@ export const CartLayout: FC<LayoutProps> = ({ children }) => {
       await axios.post(apiUrlBuilder(url), {
         session: localStorage.getItem('session'),
         userId: user.id,
-        productId: item?.product?.id,
-        selectorValue: item?.selectorValue,
+        productId: item?.part?.id,
       });
       fetchCart(user.id);
     } catch (error) {
@@ -48,8 +47,7 @@ export const CartLayout: FC<LayoutProps> = ({ children }) => {
       await axios.post(apiUrlBuilder(url), {
         session: localStorage.getItem('session'),
         userId: user.id,
-        productId: item?.product?.id,
-        selectorValue: item?.selectorValue,
+        productId: item?.part?.id,
       });
       fetchCart(user.id);
     } catch (error) {
@@ -62,7 +60,7 @@ export const CartLayout: FC<LayoutProps> = ({ children }) => {
     router.push(user.id ? '/order' : '/login?backUrl=/order');
   };
 
-  const cartPrices = cart?.map(p => p.product.price * p.count) || [];
+  const cartPrices = cart?.map(p => +(`${p.part.priceDollars}.${p.part.priceCents}`) * p.count) || [];
   const cartTotal = cartPrices.reduce((prev, curr) => prev + curr, 0);
 
   return (
@@ -85,22 +83,17 @@ export const CartLayout: FC<LayoutProps> = ({ children }) => {
                   <div className={s.imageInfo}>
                     <div className={s.imageWrapper}>
                       <Image
-                        src={imageUrlBuilder(item.product.images[0].imageUrl)}
-                        alt={item.product.name}
+                        src={imageUrlBuilder(item.part.images[0].imageUrl)}
+                        alt={item.part.name}
                         style={{ objectFit: 'cover' }}
                         fill
                       />
                     </div>
                     <div className={s.itemInfo}>
-                      <p className={s.itemName}>{item.product.name}</p>
+                      <p className={s.itemName}>{item.part.name}</p>
                       <p className={s.itemPrice}>
-                        {(item.product.price * item.count).toLocaleString('ru-RU')} ₽
+                        {(+(`${item.part.priceDollars}.${item.part.priceCents}`) * item.count).toLocaleString('ru-RU')} ₽
                       </p>
-                      {item?.product?.selector && item.selectorValue && (
-                        <p className={s.itemPrice}>
-                          {item.product?.selector?.name} - {item.selectorValue}
-                        </p>
-                      )}
                     </div>
                   </div>
 

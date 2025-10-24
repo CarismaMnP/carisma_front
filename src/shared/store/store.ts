@@ -1,13 +1,13 @@
 import { createStore } from 'zustand/vanilla';
 import { IProduct } from '../types/Product';
 import { apiUrlBuilder } from '../utils/urlBuilder';
+import { ISparePart } from '../types/SparePart';
 
 export interface ICart {
   id: number;
   count: number;
-  productId: number;
-  selectorValue: string;
-  product: IProduct;
+  partId: string;
+  part: ISparePart;
 }
 
 export type CartState = {

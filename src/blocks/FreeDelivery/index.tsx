@@ -17,7 +17,7 @@ export const FreeDelivery = ({ product }: { product?: IProduct }) => {
   const [productInCart, setProductInCart] = useState(false);
   useEffect(() => {
     if (product) {
-      const inCartId = cart.findIndex(productInCart => productInCart.productId === product.id);
+      const inCartId = cart.findIndex(productInCart => productInCart.partId === product.id);
       if (inCartId !== -1) setProductInCart(true);
     }
   }, [product, cart]);

@@ -1,18 +1,19 @@
 import s from './page.module.css';
 
 import { Footer } from '@/blocks/Footer';
-import { Navbar } from '@/components/Navbar';
 import { BurgerNavbar } from '@/components/BurgerNavbar';
 import { Order } from '@/blocks/Order';
 import { Slide, ToastContainer } from 'react-toastify';
+import { StickyNavbar } from '@/components/StickyNavbar';
 
 export default async function OrderPage() {
   return (
     <div className={s.page}>
-      <Navbar black />
+      <StickyNavbar />
       <BurgerNavbar />
+
       <ToastContainer
-        style={{zIndex: 999999}}
+        style={{ zIndex: 999999 }}
         position="top-center"
         autoClose={3000}
         hideProgressBar={false}
@@ -25,6 +26,7 @@ export default async function OrderPage() {
         theme="dark"
         transition={Slide}
       />
+
       <Order />
       <Footer />
     </div>

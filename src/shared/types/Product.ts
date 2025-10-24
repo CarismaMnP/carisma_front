@@ -2,7 +2,7 @@ import { IImage } from '@/shared/types/Image';
 import { ICategory } from './Category';
 
 export interface IProduct {
-  id: number;
+  id: string;
   name: string;
   description: string;
   link: string;
