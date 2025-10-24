@@ -8,23 +8,23 @@ interface iLayoutProps {
 }
 
 export const SessionLayout: FC<iLayoutProps> = ({children}) => {
-    useEffect(() => {
-        const session = localStorage.getItem("session");
-        if (!session) {
-            const url = `/user/session`;
-            try {
-                fetch(apiUrlBuilder(url))
-                .then((res) => {
-                    res.json()
-                    .then((responce) => {
-                        localStorage.setItem("session", responce)
-                    })
-                })
-            } catch (error) {
-                console.log(error);
-            }        
-        }
-    }, [])
+    // useEffect(() => {
+    //     const session = localStorage.getItem("session");
+    //     if (!session) {
+    //         const url = `/user/session`;
+    //         try {
+    //             fetch(apiUrlBuilder(url))
+    //             .then((res) => {
+    //                 res.json()
+    //                 .then((responce) => {
+    //                     localStorage.setItem("session", responce)
+    //                 })
+    //             })
+    //         } catch (error) {
+    //             console.log(error);
+    //         }        
+    //     }
+    // }, [])
 
     return children
 }
