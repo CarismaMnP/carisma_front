@@ -182,7 +182,7 @@ export const Arrivals = () => {
     const sectionMinHeight = isMobile ? `unset` : `calc(100vh + ${(Math.max(arrivals.length - 1, 0)) * 600}px)`;
 
     return (
-        <section className={s.arrivals} ref={sectionRef} style={{ minHeight: sectionMinHeight }}>
+        <section id='arrivals' className={s.arrivals} ref={sectionRef} style={{ minHeight: sectionMinHeight }}>
             <div className={s.sticky}>
                 <TextEffectOne className={s.sectionTitle} staggerDuration={0.03} animateOnce={false} text="Latest arrivals" />
                 <div className={s.cardsContainer}>

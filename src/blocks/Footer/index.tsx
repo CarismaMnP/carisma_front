@@ -7,10 +7,10 @@ export const Footer = () => {
         <div className={s.footer}>
             <div className={s.container}>
                 <div className={s.links}>
-                    <Link className={s.link} href="#">Used Parts</Link>
-                    <Link className={s.link} href="#">Arrived Vehicles</Link>
-                    <Link className={s.link} href="#">About</Link>
-                    <Link className={s.link} href="#">Contact Us</Link>
+                    <Link className={s.link} href="/catalog">Used Parts</Link>
+                    <Link className={s.link} href="/#arrivals">Arrived Vehicles</Link>
+                    <Link className={s.link} href="/about">About</Link>
+                    <Link className={s.link} href="/contact">Contact Us</Link>
                 </div>
                 <div className={s.legal}>
                     <Link className={s.link} href="#">© CARisma M&P. All rights reserved.</Link>

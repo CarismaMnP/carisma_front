@@ -110,6 +110,22 @@
     }
 }
 
+@media (max-width: 745px) {
+    .contactsBlock {
+        gap: 12rem;
+    }
+
+    .contactsData {
+        flex-direction: column;
+        gap: 1.6rem;
+    }
+
+    .contactsWidgets {
+        flex-direction: column;
+        gap: 1.6rem;
+    }
+}
+
 /* Mobile */
 @media (max-width: 480px) {
     .contactsWrapper {

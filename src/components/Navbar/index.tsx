@@ -25,7 +25,7 @@ export const Navbar: FC<INavbarProps> = ({ black }) => {
           <Link className={s.navLink} href='/catalog'>
             Used Parts
           </Link>
-          <Link className={s.navLink} href='/vehicles'>
+          <Link className={s.navLink} href='/#arrivals'>
             Arrived Vehicles
           </Link>
           <Link className={s.navLink} href='/about'>

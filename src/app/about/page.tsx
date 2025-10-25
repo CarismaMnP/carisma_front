@@ -1,7 +1,6 @@
 import s from './page.module.css';
 
 import { Footer } from '@/blocks/Footer';
-import { Hero } from '@/blocks/Hero';
 import { AboutHero } from '@/blocks/AboutHero';
 import { AboutImage } from '@/blocks/AboutImage';
 import { AboutContent } from '@/blocks/AboutContent';
