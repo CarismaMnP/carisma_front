@@ -45,7 +45,7 @@ const cartMock: ICart[] = [
       car: carMockData,
       priceDollars: 125,
       priceCents: 45,
-      images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
+      images: [{ imageUrl: 'https://pub-bc3786b523da4133a78648b83b419424.r2.dev/arrivals/2025/09/1759251326344_75a0f59c8c004bdd.png', previewUrl: 'https://pub-bc3786b523da4133a78648b83b419424.r2.dev/arrivals/2025/09/1759251326344_75a0f59c8c004bdd.png' }],
     },
   },
   {
@@ -64,7 +64,7 @@ const cartMock: ICart[] = [
       car: carMockData,
       priceDollars: 125,
       priceCents: 45,
-      images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
+      images: [{ imageUrl: 'https://pub-bc3786b523da4133a78648b83b419424.r2.dev/arrivals/2025/09/1759251326344_75a0f59c8c004bdd.png', previewUrl: 'https://pub-bc3786b523da4133a78648b83b419424.r2.dev/arrivals/2025/09/1759251326344_75a0f59c8c004bdd.png' }],
     },
   },
   {
@@ -83,7 +83,7 @@ const cartMock: ICart[] = [
       car: carMockData,
       priceDollars: 125,
       priceCents: 45,
-      images: [{ imageUrl: '/drip.png', previewUrl: '/drip.png' }],
+      images: [{ imageUrl: 'https://pub-bc3786b523da4133a78648b83b419424.r2.dev/arrivals/2025/09/1759251326344_75a0f59c8c004bdd.png', previewUrl: 'https://pub-bc3786b523da4133a78648b83b419424.r2.dev/arrivals/2025/09/1759251326344_75a0f59c8c004bdd.png' }],
     },
   }
 ]
