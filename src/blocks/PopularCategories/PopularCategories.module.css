@@ -17,6 +17,10 @@
     text-align: left;
 }
 
+.title span {
+    line-height: 1 !important;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

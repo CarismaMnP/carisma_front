@@ -29,7 +29,10 @@
     color: #000000;
     text-transform: uppercase;
     margin: 0;
-    line-height: 1;
+}
+
+.sectionTitle span {
+    line-height: 1 !important;
 }
 
 .content {
