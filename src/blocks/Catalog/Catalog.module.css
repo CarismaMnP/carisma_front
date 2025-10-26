@@ -95,14 +95,18 @@
     }
 
     .catalogHeader {
-        padding: 0 16px 36px;
+        padding: 64px 16px 36px;
 
     }
 
     .title {
-        font-size: 2.2rem;
+        font-size: 3.2rem;
         margin-bottom: 40px;
         text-align: left;
+    }
+
+    .titleCount {
+        font-size: 2rem;
     }
 
     .grid {
@@ -151,12 +155,15 @@
 
 @media (max-width: 560px) {
     .section {
-        padding: 40px 0;
+        padding: 50px 0;
     }
 
     .title {
-        font-size: 1.8rem;
         margin-bottom: 30px;
+    }
+
+    .titleCount {
+        font-size: 2rem;
     }
 
     .grid {

@@ -2,6 +2,7 @@
 import { FC, ReactNode, useState } from 'react';
 import s from './SearchingForm.module.css';
 import Image from 'next/image';
+import { TitledInput } from '@/shared/ui/TitledInput';
 
 interface SearchingFormProps {
     title?: ReactNode
@@ -44,16 +45,30 @@ export const SearchingForm: FC<SearchingFormProps> = ({ title }) => {
                     <div className={s.fieldsWrapper}>
                         <div className={s.fieldsGrid}>
                             <div className={s.leftColumn}>
-                                <select
+                                <input
+                                    type="text"
+                                    value={selectedMake}
+                                    onChange={(e) => setSelectedMake(e?.target?.value)}
+                                    placeholder="Make"
+                                    className={s.input}
+                                />
+                                <input
+                                    type="text"
+                                    value={selectedModel}
+                                    onChange={(e) => setSelectedModel(e?.target?.value)}
+                                    placeholder="Model"
+                                    className={s.input}
+                                />
+                                {/* <select
                                     value={selectedMake}
                                     onChange={(e) => setSelectedMake(e.target.value)}
                                     className={s.select}
                                 >
                                     <option value="">Make</option>
                                     <option value="bmw">BMW</option>
-                                </select>
+                                </select> */}
 
-                                <select
+                                {/* <select
                                     value={selectedModel}
                                     onChange={(e) => setSelectedModel(e.target.value)}
                                     className={s.select}
@@ -61,11 +76,19 @@ export const SearchingForm: FC<SearchingFormProps> = ({ title }) => {
                                     <option value="">Model</option>
                                     <option value="x5">X5</option>
                                     <option value="x3">X3</option>
-                                </select>
+                                </select> */}
                             </div>
 
                             <div className={s.rightColumn}>
-                                <select
+                                <input
+                                    type="text"
+                                    value={selectedGeneration}
+                                    onChange={(e) => setSelectedGeneration(e.target.value)}
+                                    placeholder="Generation"
+                                    className={s.input}
+                                />
+                                
+                                {/* <select
                                     value={selectedGeneration}
                                     onChange={(e) => setSelectedGeneration(e.target.value)}
                                     className={s.select}
@@ -73,7 +96,7 @@ export const SearchingForm: FC<SearchingFormProps> = ({ title }) => {
                                     <option value="">Generation</option>
                                     <option value="g05">G05</option>
                                     <option value="f15">F15</option>
-                                </select>
+                                </select> */}
 
                                 <input
                                     type="email"

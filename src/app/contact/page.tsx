@@ -12,6 +12,7 @@ import { EmailIcon } from '@/shared/assets/EmailIcon';
 import { ClockIcon } from '@/shared/assets/ClockIcon';
 import { TitledInput } from '@/shared/ui/TitledInput';
 import { ChangeEvent, useCallback, useState } from 'react';
+import Image from 'next/image';
 
 export default async function ContactPage() {
 
@@ -101,7 +102,15 @@ export default async function ContactPage() {
               <button className={s.submitButton}>Send Message</button>
 
             </div>
-            <div className={s.map}>MAP</div>
+            <div className={s.map}>
+              <Image
+                fill
+                src='/map.png'
+                alt='MAP'
+                sizes='100%'
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
           </div>
 
         </div>
