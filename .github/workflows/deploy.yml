@@ -1,0 +1,34 @@
+name: Deploy client NextJS app
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create .env
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+        run: |
+          cat <<EOF > .env
+          NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+          
+          EOF
+        shell: bash
+
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Build next app
+        run: npm run build
+
+      - name: Deploy to server
+        run: bash ./deploy.sh
+        
