@@ -18,7 +18,7 @@ export default async function AboutPage() {
       <AboutImage />
       <AboutContent />
       <CompetitiveAdvantages />
-      <AboutContent />
+      <AboutContent start />
       <CallToAction />
       <Footer />
     </div>

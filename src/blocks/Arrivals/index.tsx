@@ -3,7 +3,7 @@ import s from './Arrivals.module.css';
 import { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useTransform, MotionValue, useSpring } from 'framer-motion';
 import Image from 'next/image';
-import { apiUrlBuilder } from '@/shared/utils/urlBuilder';
+// import { apiUrlBuilder } from '@/shared/utils/urlBuilder';
 import Link from 'next/link';
 import { TextEffectOne } from 'react-text-animate';
 import { Reveal } from '@/shared/ui/Reveal';
@@ -27,28 +27,28 @@ interface ArrivalCardProps {
 const data = [
     {
         "id": 3,
-        "model": "3 series",
-        "body": "E46 318i N46",
-        "year": 2002,
-        "imageURL": "arrivals/2025/09/1759251326344_75a0f59c8c004bdd.png",
+        "model": "BMW X5",
+        "body": "40 000 miles",
+        "year": "G05",
+        "imageURL": "/arrivals/1.jpeg",
         "createdAt": "2025-09-30T16:55:26.978Z",
         "updatedAt": "2025-09-30T16:55:26.978Z"
     },
     {
         "id": 2,
-        "model": "3 series",
-        "body": "E46 318i N46",
-        "year": 2002,
-        "imageURL": "arrivals/2025/09/1759251308944_192417e38b113fe6.png",
+        "model": "BMW 3-series",
+        "body": "35 000 miles",
+        "year": "G20",
+        "imageURL": "/arrivals/2.jpg",
         "createdAt": "2025-09-30T16:55:09.481Z",
         "updatedAt": "2025-09-30T16:55:09.481Z"
     },
     {
         "id": 1,
-        "model": "3 series",
-        "body": "E46 318i N46",
-        "year": 2002,
-        "imageURL": "arrivals/2025/09/1759251292262_93a400978b7df819.png",
+        "model": "BMW 7-series",
+        "body": "",
+        "year": "",
+        "imageURL": "/arrivals/3.jpeg",
         "createdAt": "2025-09-21T12:11:46.392Z",
         "updatedAt": "2025-09-30T16:54:54.231Z"
     }
@@ -125,7 +125,8 @@ const ArrivalCard = ({ arrival, index, totalCount, scrollYProgress, isMobile }: 
             </div>
             <div className={s.cardImage}>
                 <Image
-                    src={`https://pub-bc3786b523da4133a78648b83b419424.r2.dev/${arrival.imageURL}`}
+                    // src={`https://pub-bc3786b523da4133a78648b83b419424.r2.dev/${arrival.imageURL}`}
+                    src={arrival.imageURL}
                     alt={`${arrival.model} ${arrival.year}`}
                     fill
                     style={{ objectFit: 'cover' }}
@@ -135,7 +136,7 @@ const ArrivalCard = ({ arrival, index, totalCount, scrollYProgress, isMobile }: 
 
             <div className={s.cardContent}>
                 <Reveal className={s.cardWrapper} >
-                    {isMobile ? "true" : "false"} {arrival.model} {arrival.year} <br />
+                    {arrival.model} {arrival.year} <br />
                     {arrival.body}
                 </Reveal>
             </div>

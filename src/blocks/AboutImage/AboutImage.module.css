@@ -23,7 +23,7 @@
 }
 
 /* Tablet */
-@media (max-width: 102.4rem) {
+@media (max-width: 1024px) {
     .aboutImage {
         padding: 0 3.2rem;
         margin-top: 3.2rem;
@@ -35,7 +35,7 @@
 }
 
 /* Mobile */
-@media (max-width: 48rem) {
+@media (max-width: 480px) {
     .aboutImage {
         padding: 0 1.6rem;
         margin-top: 2.4rem;

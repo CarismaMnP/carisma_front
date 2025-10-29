@@ -6,7 +6,7 @@ export const AboutImage = () => {
         <section className={s.aboutImage}>
             <div className={s.imageWrapper}>
                 <img
-                    src="/herobg.png"
+                    src="/about1.png"
                     alt="BMW Vehicle"
                     className={s.image}
                 />
