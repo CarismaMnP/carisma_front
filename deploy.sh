@@ -1,4 +1,4 @@
-APP_NAME="fauno_client"
+APP_NAME="carisma_client"
 
 if pm2 describe $APP_NAME > /dev/null; then
     echo "Stopping existing process..."
