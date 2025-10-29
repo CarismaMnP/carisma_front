@@ -1,4 +1,4 @@
-APP_NAME="carisma_client"
+APP_NAME="carisma_front"
 
 if pm2 describe $APP_NAME > /dev/null; then
     echo "Stopping existing process..."
